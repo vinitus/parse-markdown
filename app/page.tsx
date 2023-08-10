@@ -28,16 +28,18 @@ export default function Home() {
           </div>
         </nav>
       </header>
-      <main className='p-10 max-w-screen-xl mx-auto py-10 px-4 flex flex-row w-full'>
-        {/* sidebar */}
-        <div className='sticky h-[100vh] flex-shrink-0 flex-col justify-between w-72'>
-          <ul>1</ul>
-          <ul>2</ul>
-          <ul>3</ul>
-          <ul>4</ul>
-          <ul>5</ul>
+      <main>
+        <div className='max-w-screen-xl mx-auto p-10 flex flex-row w-full'>
+          {/* sidebar */}
+          <div className='sticky h-[100vh] flex-shrink-0 flex-col justify-between w-72'>
+            <ul>1</ul>
+            <ul>2</ul>
+            <ul>3</ul>
+            <ul>4</ul>
+            <ul>5</ul>
+          </div>
+          <article className='w-full'>2</article>
         </div>
-        <article className='w-full'>2</article>
       </main>
     </>
   );
