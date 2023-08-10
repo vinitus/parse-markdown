@@ -5,7 +5,6 @@ import navbarCss from '@/app/navbar.module.css';
 export default function Home() {
   return (
     <>
-      {/* header에 tailwindcss를 사용하면 적용이 안됨 */}
       <header className={navbarCss.navbarHeader}>
         <nav className={navbarCss.navbarLayout}>
           <div className={navbarCss.navbarCategoryArea}>
