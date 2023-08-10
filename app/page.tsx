@@ -1,18 +1,30 @@
 import Image from 'next/image';
 import blogLogo from '@/public/blog-logo.png';
+import navbarCss from '@/app/navbar.module.css';
 
 export default function Home() {
   return (
     <>
-      <header className='sticky top-0 flex flex-col justify-around items-center z-[9999]'>
-        <nav className='flex items-center'>
-          <div className='flex items-center gap-6'>
+      {/* header에 tailwindcss를 사용하면 적용이 안됨 */}
+      <header className={navbarCss.navbarHeader}>
+        <nav className={navbarCss.navbarLayout}>
+          <div className={navbarCss.navbarCategoryArea}>
             <Image src={blogLogo} alt='블로그 로고' />
             <p>Home</p>
             <p>Post</p>
             <p>TEMPT</p>
             <p>TEMPT</p>
             <p>TEMPT</p>
+          </div>
+          {/* search */}
+          <div className={navbarCss.navbarSearchArea}>
+            <button className={navbarCss.navbarSearchBox}>
+              검색
+              <p className={navbarCss.navbarSearchBoxButton}>검색</p>
+            </button>
+            <a href='' className={navbarCss.navbarContactButton}>
+              <p className={navbarCss.navbarContactButtonFont}>Contact</p>
+            </a>
           </div>
         </nav>
       </header>
