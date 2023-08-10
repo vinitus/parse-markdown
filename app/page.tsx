@@ -16,11 +16,16 @@ export default function Home() {
           </div>
         </nav>
       </header>
-      <main className='p-10'>
-        <div className='w-full flex justify-evenly'>
-          <div>1</div>
-          <div>2</div>
+      <main className='p-10 max-w-screen-xl mx-auto py-10 px-4 flex flex-row w-full'>
+        {/* sidebar */}
+        <div className='sticky h-[100vh] flex-shrink-0 flex-col justify-between w-72'>
+          <ul>1</ul>
+          <ul>2</ul>
+          <ul>3</ul>
+          <ul>4</ul>
+          <ul>5</ul>
         </div>
+        <article className='w-full'>2</article>
       </main>
     </>
   );
