@@ -12,7 +12,6 @@ export default function MarkdownForm({ filename }: { filename: string }) {
   }
 
   function markdownChangeHandler(event: ChangeEvent<HTMLTextAreaElement>) {
-    console.log(event);
     setMarkdown(event.target.value);
   }
 
