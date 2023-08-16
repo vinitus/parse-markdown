@@ -5,5 +5,5 @@ export async function GET(request: Request, { params }: { params: { filename: st
   const { filename } = params;
   const file = fs.readFileSync(`C://Users/vinitus/my-blog/public/${filename}.md`, 'utf8');
 
-  return NextResponse.json({ file });
+  return NextResponse.json({ markdown: file });
 }
