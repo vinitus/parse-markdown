@@ -1,20 +1,18 @@
 'use client';
 
 import loadMarkdown from '@/utils/loadMarkdown';
-import { use, useState, useEffect, ChangeEvent } from 'react';
+import { use, useState, ChangeEvent } from 'react';
 
 export default function MarkdownForm({ filename }: { filename: string }) {
   const [markdown, setMarkdown] = useState('');
 
-  useEffect(() => {
-    async function a() {
-      const markdownFile = await loadMarkdown(filename);
-      setMarkdown(markdownFile);
-    }
-    a();
-  }, [filename]);
+  if (!markdown) {
+    const markdownFile = use(loadMarkdown(filename));
+    setMarkdown(markdownFile);
+  }
 
   function markdownChangeHandler(event: ChangeEvent<HTMLTextAreaElement>) {
+    console.log(event);
     setMarkdown(event.target.value);
   }
 
