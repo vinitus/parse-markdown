@@ -1,9 +1,12 @@
+import { ReactNode } from 'react';
 import Image from 'next/image';
 import blogLogo from '@/public/blog-logo.png';
 import navbarCss from '@/app/navbar.module.css';
 import MarkdownForm from '@/components/MarkdownForm';
+import Link from 'next/link';
 
-export default function Home() {
+export default function Home({ children }: { children: ReactNode }) {
+  console.log(children);
   return (
     <>
       <header className={navbarCss.navbarHeader}>
@@ -12,7 +15,9 @@ export default function Home() {
             <Image src={blogLogo} alt='블로그 로고' />
             <p>Home</p>
             <p>Post</p>
-            <p>TEMPT</p>
+            <Link href={'/markdown'}>
+              <p>Mardown</p>
+            </Link>
             <p>TEMPT</p>
             <p>TEMPT</p>
           </div>
@@ -42,6 +47,7 @@ export default function Home() {
             <MarkdownForm filename='HTTP,TCPIP' />
           </article>
         </div>
+        {children}
       </main>
     </>
   );
