@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Sidebar from '@/components/Sidebar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +16,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='kr'>
       <body className={inter.className}>
         <Header />
-        {children}
+        <main>
+          <div className='max-w-screen-xl mx-auto p-10 flex flex-row w-full'>
+            <Sidebar />
+            {children}
+          </div>
+        </main>
       </body>
     </html>
   );
