@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <>
-      <div>마크다운 세그먼트</div>
-    </>
-  );
+import MarkdownForm from '@/components/MarkdownForm';
+
+export default function MarkdownEditor() {
+  return <MarkdownForm filename='HTTP,TCPIP' />;
 }
