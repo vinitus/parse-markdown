@@ -1,8 +1,3 @@
-export default function MarkdownSegmentLayout(props: { editor: React.ReactNode; previewer: React.ReactNode }) {
-  return (
-    <div className='w-full'>
-      {props.editor}
-      {props.previewer}
-    </div>
-  );
+export default function MarkdownSegmentLayout({ children }: { children: React.ReactNode }) {
+  return <div className='w-full'>{children}</div>;
 }
