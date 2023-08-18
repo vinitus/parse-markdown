@@ -4,15 +4,15 @@ import { useState } from 'react';
 import MarkdownForm from './MarkdownForm';
 
 export default function Markdown({
-  markdownOrignalDataObj,
+  markdownDataObj,
 }: {
-  markdownOrignalDataObj: {
-    markdownOrignalData: string;
+  markdownDataObj: {
+    markdownContent: string;
     filename: string;
   };
 }) {
-  const { markdownOrignalData, filename } = markdownOrignalDataObj;
-  const [markdown, setMarkdown] = useState(markdownOrignalData);
+  const { markdownContent, filename } = markdownDataObj;
+  const [markdown, setMarkdown] = useState(markdownContent);
 
   return (
     <>

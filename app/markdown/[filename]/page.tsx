@@ -4,15 +4,15 @@ import loadMarkdown from '@/utils/loadMarkdown';
 export default async function MarkdownEditor({ params }: { params: { filename: string } }) {
   const { filename } = params;
   const decodedFilename = decodeURIComponent(filename);
-  const markdownOrignalData = await loadMarkdown(decodedFilename);
-  const markdownOrignalDataObj = {
-    markdownOrignalData,
+  const markdownContent = await loadMarkdown(decodedFilename);
+  const markdownDataObj = {
+    markdownContent,
     filename,
   };
 
   return (
     <>
-      <Markdown markdownOrignalDataObj={markdownOrignalDataObj} />
+      <Markdown markdownDataObj={markdownContent} />
     </>
   );
 }
