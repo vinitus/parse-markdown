@@ -1,31 +1,27 @@
 'use client';
 
-import loadMarkdown from '@/utils/loadMarkdown';
-import { use, useState, ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 
-export default function MarkdownForm({ filename }: { filename: string }) {
-  const [markdown, setMarkdown] = useState('');
+interface Props {
+  filename: string;
+  markdown: string;
+  setMarkdown: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  if (!markdown) {
-    const markdownFile = use(loadMarkdown(filename));
-    setMarkdown(markdownFile);
-  }
-
+export default function MarkdownForm({ filename, markdown, setMarkdown }: Props) {
   function markdownChangeHandler(event: ChangeEvent<HTMLTextAreaElement>) {
     setMarkdown(event.target.value);
   }
 
   return (
     <>
-      {markdown ? (
+      {markdown && (
         <>
           <h1>{filename + '.md'}</h1>
           <form action='' className='w-full h-full'>
             <textarea name='markdown-editor' id='markdown-editor' defaultValue={markdown} onChange={markdownChangeHandler} className='w-full h-full' />
           </form>
         </>
-      ) : (
-        <div>loading...</div>
       )}
     </>
   );
