@@ -16,9 +16,9 @@ export default function Markdown({
   const [markdown, setMarkdown] = useState(markdownContent);
 
   return (
-    <>
+    <div className='flex flex-row'>
       <MarkdownForm filename={filename} markdown={markdown} setMarkdown={setMarkdown} />
       <MarkdownPreview markdownContent={markdownContent} />
-    </>
+    </div>
   );
 }
