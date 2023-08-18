@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import MarkdownForm from './MarkdownForm';
+import MarkdownPreview from './MarkdownPreview';
 
 export default function Markdown({
   markdownDataObj,
@@ -17,6 +18,7 @@ export default function Markdown({
   return (
     <>
       <MarkdownForm filename={filename} markdown={markdown} setMarkdown={setMarkdown} />
+      <MarkdownPreview markdownContent={markdownContent} />
     </>
   );
 }
