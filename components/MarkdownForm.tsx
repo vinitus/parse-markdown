@@ -15,14 +15,10 @@ export default function MarkdownForm({ filename, markdown, setMarkdown }: Props)
 
   return (
     <>
-      {markdown && (
-        <>
-          <h1>{filename + '.md'}</h1>
-          <form action='' className='w-full h-full'>
-            <textarea name='markdown-editor' id='markdown-editor' defaultValue={markdown} onChange={markdownChangeHandler} className='w-full h-full' />
-          </form>
-        </>
-      )}
+      <h1>{filename + '.md'}</h1>
+      <form action='' className='w-full h-full'>
+        <textarea name='markdown-editor' id='markdown-editor' defaultValue={markdown} onChange={markdownChangeHandler} className='w-full h-full' />
+      </form>
     </>
   );
 }
