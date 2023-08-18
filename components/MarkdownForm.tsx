@@ -14,7 +14,7 @@ export default function MarkdownForm({ filename, markdown, setMarkdown }: Props)
   }
 
   return (
-    <div className='w-[50%] h-[100vh]'>
+    <div className='w-[50%] h-[calc(100vh-195px)]'>
       <h1>{filename + '.md'}</h1>
       <form action='' className='h-full'>
         <textarea name='markdown-editor' id='markdown-editor' defaultValue={markdown} onChange={markdownChangeHandler} className='w-full h-full' />
