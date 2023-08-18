@@ -12,7 +12,7 @@ export default async function MarkdownEditor({ params }: { params: { filename: s
 
   return (
     <>
-      <Markdown markdownDataObj={markdownContent} />
+      <Markdown markdownDataObj={markdownDataObj} />
     </>
   );
 }
