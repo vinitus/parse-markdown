@@ -1,9 +1,3 @@
-import MarkdownForm from '@/components/MarkdownForm';
-
 export default function Home() {
-  return (
-    <article className='w-full'>
-      <MarkdownForm filename='HTTP,TCPIP' />
-    </article>
-  );
+  return <article className='w-full'>여긴 홈페이지!</article>;
 }
