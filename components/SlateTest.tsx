@@ -10,6 +10,7 @@ import { Slate, Editable, withReact } from 'slate-react';
 
 export default function SlateTest() {
   const [editor] = useState(() => withReact(createEditor()));
+
   const initialValue = [
     {
       type: 'paragraph',
@@ -25,7 +26,13 @@ export default function SlateTest() {
 
   return (
     <Slate editor={editor} initialValue={initialValue}>
-      <Editable onKeyDown={() => console.log(editor.children[0])} onBlur={() => console.log(editor)} />
+      <Editable
+        className='w-full'
+        onKeyDown={() => console.log(`${editor.selection?.anchor.offset} ${editor.selection?.anchor.path[0]}`)}
+        onBlur={() => console.log(`${editor.selection?.anchor.offset} ${editor.selection?.anchor.path[0]}`)}
+        // onKeyDown={() => console.log(`${editor.selection?.anchor} ${editor.selection?.focus}`)}
+        // onBlur={() => console.log(`${editor.selection?.anchor} ${editor.selection?.focus}`)}
+      />
     </Slate>
   );
 }
