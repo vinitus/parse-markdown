@@ -1,6 +1,8 @@
 'use client';
 
 import { ChangeEvent } from 'react';
+import { Editor, Transforms, createEditor } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 
 interface Props {
   filename: string;

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import MarkdownForm from './MarkdownForm';
 import MarkdownPreview from './MarkdownPreview';
+import SlateTest from './SlateTest';
 
 export default function Markdown({
   markdownDataObj,
@@ -18,7 +19,8 @@ export default function Markdown({
   return (
     <div className='flex flex-row'>
       <MarkdownForm filename={filename} markdown={markdown} setMarkdown={setMarkdown} />
-      <MarkdownPreview markdownContent={markdown} />
+      <SlateTest />
+      {/* <MarkdownPreview markdownContent={markdown} /> */}
     </div>
   );
 }
