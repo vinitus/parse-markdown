@@ -39,7 +39,7 @@ export default function Markdown({
       {renderFlag !== 0 && (
         <div className='w-full h-[calc(100vh-155px)]'>
           {editor.children.map((item, idx) =>
-            item.children[0].text !== '   \r' ? <MarkdownPreview markdownContent={item.children[0].text} key={idx} /> : <div key={idx} className='h-5' />
+            item.children[0].text !== '   \r' ? <MarkdownPreview markdownContent={item.children[0].text} key={idx} /> : <div key={idx} className='h-6' />
           )}
         </div>
       )}
