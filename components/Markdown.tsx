@@ -14,7 +14,7 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
       <MarkdownForm filename={filename} markdown={markdown} setMarkdown={setMarkdown} />
       <div className='w-[50%] flex flex-col'>
         {splitedMarkdown.map((line, idx) => {
-          return line === '\r' ? <div className='h-6' key={idx} /> : <MarkdownPreview markdownContent={line} key={idx} />;
+          return line === '\r' || !line ? <span className='h-6' key={idx} /> : <MarkdownPreview markdownContent={line} key={idx} />;
         })}
       </div>
     </div>
