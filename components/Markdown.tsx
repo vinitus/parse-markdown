@@ -5,6 +5,7 @@ import MarkdownPreview from './MarkdownPreview';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import transformToSlateValue from '@/utils/transformToSlateValue';
+import { isElement, isText } from '@/utils/typeguard';
 
 export default function Markdown({
   markdownDataObj,
@@ -38,9 +39,19 @@ export default function Markdown({
       </div>
       {renderFlag !== 0 && (
         <div className='w-full h-[calc(100vh-155px)]'>
-          {editor.children.map((item, idx) =>
-            item.children[0].text !== '   \r' ? <MarkdownPreview markdownContent={item.children[0].text} key={idx} /> : <div key={idx} className='h-6' />
-          )}
+          {editor.children.map((item, idx) => {
+            // 타입가드를 통한 typescript 에러 해결
+            if (isElement(item) && isText(item.children[0])) {
+              return item.children[0].text !== '   \r' ? (
+                <MarkdownPreview markdownContent={item.children[0].text} key={idx} />
+              ) : (
+                <div key={idx} className='h-6' />
+              );
+            } else {
+              // 이게 옳은 것일까? 는 모르겠음.. 모든 렌더링을 중단시킬 필요가 있을까
+              throw new Error('Invalid text');
+            }
+          })}
         </div>
       )}
       {/* <MarkdownPreview markdownContent={markdown} /> */}
