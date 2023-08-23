@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import MarkdownForm from './MarkdownForm';
 import MarkdownPreview from './MarkdownPreview';
+import markdownParser from '@/utils/markdownParser';
 
 export default function Markdown({ markdownDataObj }: { markdownDataObj: { markdownContent: string; filename: string } }) {
   const { markdownContent, filename } = markdownDataObj;
   const [markdown, setMarkdown] = useState(markdownContent);
   const splitedMarkdown = markdown.split('\n');
+  markdownParser(markdownContent);
 
   return (
     <div className='flex flex-row'>
