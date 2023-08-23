@@ -4,5 +4,9 @@ import React from 'react';
 import Markdown from 'markdown-to-jsx';
 
 export default function MarkdownRenderer({ markdownContent }: { markdownContent: string }) {
-  return <Markdown options={{ wrapper: 'article' }}>{markdownContent}</Markdown>;
+  return (
+    <div className='w-[50%]'>
+      <Markdown options={{ wrapper: 'article' }}>{markdownContent}</Markdown>
+    </div>
+  );
 }
