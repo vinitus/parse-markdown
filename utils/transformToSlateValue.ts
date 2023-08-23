@@ -1,4 +1,5 @@
-import { BaseElement, Descendant, Element, Text } from 'slate';
+import { Descendant, Element } from 'slate';
+import { isElement, isText } from './typeguard';
 
 export default function transformToSlateValue(str: string): Descendant[] {
   const splitedStr = str.split('\n');
@@ -33,12 +34,4 @@ function replaceBlankToSpace(descendantArray: Descendant[]): Descendant[] {
   });
 
   return copiedArray;
-}
-
-function isElement(descendant: Descendant): descendant is Element {
-  return (descendant as Element) ? true : false;
-}
-
-function isText(descendant: Descendant): descendant is Text {
-  return (descendant as Text) ? true : false;
 }
