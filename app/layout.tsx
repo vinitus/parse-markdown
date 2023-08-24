@@ -1,13 +1,10 @@
-import Header from '@/components/Header';
-import './globals.css';
+import { useMemo } from 'react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import localFont from 'next/font/local';
 import getFileList from '@/utils/getFileList';
-import { useMemo } from 'react';
-
-const inter = Inter({ subsets: ['latin'] });
+import './globals.css';
 
 const myFont = localFont({
   src: [
