@@ -3,8 +3,9 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Sidebar from '@/components/Sidebar';
-
 import localFont from 'next/font/local';
+import getFileList from '@/utils/getFileList';
+import { useMemo } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -44,13 +45,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const fileList = useMemo(() => {
+    const fileList = getFileList();
+    const markdownFileList = fileList.filter((filename) => filename.match(/\.md$/));
+    const markdownFilenameList = markdownFileList.map((filename) => filename.substring(0, filename.length - 3));
+
+    return markdownFilenameList;
+  }, []);
+
   return (
     <html lang='kr'>
       <body className={myFont.className}>
         <Header />
         <main className='bg-[#0a0c10] text-[#f0f3f6]'>
           <div className='max-w-screen-xl mx-auto p-10 flex flex-row w-full'>
-            <Sidebar />
+            <Sidebar fileList={fileList} />
             {children}
           </div>
         </main>
