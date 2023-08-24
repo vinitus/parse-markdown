@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import MarkdownForm from './MarkdownForm';
 import MarkdownPreview from './MarkdownPreview';
+import Button from './Button';
 
 export default function Markdown({ markdownDataObj }: { markdownDataObj: { markdownContent: string; filename: string } }) {
   const { markdownContent, filename } = markdownDataObj;
@@ -16,6 +17,7 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
         <p className='min-h-8 px-2 py-1 font-bold border border-[#7a828e] rounded-md outline-none inline-flex items-stretch text-[#7a828e] bg-[#9ea7b3] bg-opacity-0'>
           {parsedFilename}
         </p>
+        <Button>change</Button>
       </span>
       <div className='flex flex-row'>
         <MarkdownForm markdown={markdown} setMarkdown={setMarkdown} />
