@@ -13,11 +13,11 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
 
   return (
     <div className='flex flex-col'>
-      <span className='h-12 px-4'>
+      <span className='h-12 px-4 flex items-center justify-between'>
         <p className='min-h-8 px-2 py-1 font-bold border border-[#7a828e] rounded-md outline-none inline-flex items-stretch text-[#7a828e] bg-[#9ea7b3] bg-opacity-0'>
           {parsedFilename}
         </p>
-        <Button>change</Button>
+        <Button onClick={() => console.log(1)}>change</Button>
       </span>
       <div className='flex flex-row'>
         <MarkdownForm markdown={markdown} setMarkdown={setMarkdown} />
