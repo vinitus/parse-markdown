@@ -2,10 +2,11 @@
 
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
+import './markdown-preview.css';
 
 export default function MarkdownPreview({ markdown }: { markdown: string }) {
   return (
-    <div className='flex flex-col w-[50%]'>
+    <div className='markdown'>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
     </div>
   );
