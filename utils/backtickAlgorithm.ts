@@ -13,6 +13,15 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   // statement를 기반으로 한 정규식 만들기
   const { include, exclude } = filterTarget;
 
-  const includeRegex = new RegExp(include.map((word) => `\\b${word}\\b`).join('|'), 'ig');
-  console.log(includeRegex);
+  const includeRegex = new RegExp(include.map((word) => `${word}`).join('|'), 'ig');
+
+  splitedMarkdown.forEach((line) => {
+    const trimedLine = line.trim();
+
+    const matchedWord = trimedLine.matchAll(includeRegex);
+
+    const arr = [...matchedWord];
+
+    if (arr.length !== 0) console.log(arr, trimedLine);
+  });
 }
