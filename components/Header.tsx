@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import blogLogo from '@/public/blog-logo.png';
-import navbarCss from '@/app/navbar.module.css';
+import navbarCss from '@/components/navbar.module.css';
 
 export default function Header() {
   return (
