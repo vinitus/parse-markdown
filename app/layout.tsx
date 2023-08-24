@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='kr'>
       <body className={myFont.className}>
         <Header />
-        <main>
+        <main className='bg-[#0a0c10] text-[#f0f3f6]'>
           <div className='max-w-screen-xl mx-auto p-10 flex flex-row w-full'>
             <Sidebar />
             {children}
