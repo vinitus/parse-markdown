@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import remarkGfm from 'remark-gfm';
-import ReactMarkdown from 'react-markdown';
 import MarkdownForm from './MarkdownForm';
 import MarkdownPreview from './MarkdownPreview';
 
