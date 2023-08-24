@@ -1,6 +1,8 @@
 interface FilterTarget {
   include: string[];
+  includeTag: string[];
   exclude: string[];
+  excludeTag: string[];
 }
 
 export default function backtickAlgorithm(markdown: string, filterTarget: FilterTarget) {
@@ -11,12 +13,28 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   let result = '';
 
   // statement를 기반으로 한 정규식 만들기
-  const { include, exclude } = filterTarget;
+  const { include, includeTag, exclude, excludeTag } = filterTarget;
 
   const includeRegex = new RegExp(include.map((word) => `${word}`).join('|'), 'ig');
 
+  // 제외할 태그 중 a태그에 대한 처리
+  let tagRegArr: RegExp[] = [];
+  if (exclude.indexOf('a')) tagRegArr.push(/\[[^\]]*\]\([^\)]*\)/g);
+  if (exclude.indexOf('h1')) tagRegArr.push(/^# /gm);
+  if (exclude.indexOf('h2')) tagRegArr.push(/^## /gm);
+  if (exclude.indexOf('h3')) tagRegArr.push(/^### /gm);
+  if (exclude.indexOf('h4')) tagRegArr.push(/^#### /gm);
+  if (exclude.indexOf('h5')) tagRegArr.push(/^##### /gm);
+  if (exclude.indexOf('h6')) tagRegArr.push(/^###### /gm);
+
+  console.log(tagRegArr);
+
+  const tagReg = new RegExp(tagRegArr.map((regex) => regex.source).join('|'), 'g');
+
   splitedMarkdown.forEach((line) => {
     const trimedLine = line.trim();
+
+    if (trimedLine.match(tagReg)) return;
 
     const matchedWord = trimedLine.matchAll(includeRegex);
 
