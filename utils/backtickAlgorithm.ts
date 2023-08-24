@@ -14,46 +14,44 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
 
   // statement를 기반으로 한 정규식 만들기
   const { include, includeTag, exclude, excludeTag } = filterTarget;
+  console.clear();
+
+  console.log(include, exclude);
 
   // 포함할 정규식
-  const includeRegex = new RegExp(include.map((word) => `${word}`).join('|'), 'ig');
+  const includeRegex = new RegExp(
+    include
+      .map((includeWord) => {
+        const reg = new RegExp(`${includeWord}`, 'ig');
 
-  // 제거할 정규식
-  const excludeRegex = new RegExp(`(?!${exclude.map((word) => `${word}`).join('|')})`, 'ig');
+        for (const item of exclude) {
+          if (!reg.test(item)) continue;
+          if (new RegExp(`\b${includeWord}\b`, 'ig').test(item)) {
+          }
+        }
 
-  // 제외할 태그 중 a태그에 대한 처리
-  let tagRegArr: RegExp[] = [];
-  if (exclude.indexOf('a')) tagRegArr.push(/\[[^\]]*\]\([^\)]*\)/g);
-  if (exclude.indexOf('h1')) tagRegArr.push(/^# /gm);
-  if (exclude.indexOf('h2')) tagRegArr.push(/^## /gm);
-  if (exclude.indexOf('h3')) tagRegArr.push(/^### /gm);
-  if (exclude.indexOf('h4')) tagRegArr.push(/^#### /gm);
-  if (exclude.indexOf('h5')) tagRegArr.push(/^##### /gm);
-  if (exclude.indexOf('h6')) tagRegArr.push(/^###### /gm);
-
-  console.log(tagRegArr);
-
-  const tagReg = new RegExp(tagRegArr.map((regex) => regex.source).join('|'), 'g');
-
-  const composedRegex = new RegExp(`${includeRegex.source}(?=${excludeRegex.source})`, 'gi');
+        return reg.source;
+      })
+      .join('|'),
+    'ig'
+  );
 
   splitedMarkdown.forEach((line) => {
     const trimedLine = line.trim();
-
-    if (trimedLine.match(tagReg)) return;
-
-    const matchedWord = trimedLine.matchAll(includeRegex);
-
-    const arr = [...matchedWord];
-
-    // if (arr.length !== 0) console.log(arr, trimedLine);
-
-    const arr2 = [...trimedLine.matchAll(composedRegex)];
-
-    if (arr2.length) console.log(arr2, trimedLine);
   });
+}
 
-  console.log(includeRegex);
-  console.log(excludeRegex);
-  console.log(composedRegex);
+function excludeTagToRegExp(excludeReg: string[]) {
+  let tagRegArr: RegExp[] = [];
+  if (excludeReg.indexOf('a')) tagRegArr.push(/\[[^\]]*\]\([^\)]*\)/g);
+  if (excludeReg.indexOf('h1')) tagRegArr.push(/^# /gm);
+  if (excludeReg.indexOf('h2')) tagRegArr.push(/^## /gm);
+  if (excludeReg.indexOf('h3')) tagRegArr.push(/^### /gm);
+  if (excludeReg.indexOf('h4')) tagRegArr.push(/^#### /gm);
+  if (excludeReg.indexOf('h5')) tagRegArr.push(/^##### /gm);
+  if (excludeReg.indexOf('h6')) tagRegArr.push(/^###### /gm);
+
+  const tagReg = new RegExp(tagRegArr.map((regex) => regex.source).join('|'), 'g');
+
+  return tagReg;
 }
