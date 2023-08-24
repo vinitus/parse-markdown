@@ -15,7 +15,11 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   // statement를 기반으로 한 정규식 만들기
   const { include, includeTag, exclude, excludeTag } = filterTarget;
 
+  // 포함할 정규식
   const includeRegex = new RegExp(include.map((word) => `${word}`).join('|'), 'ig');
+
+  // 제거할 정규식
+  const excludeRegex = new RegExp(`(?!${exclude.map((word) => `${word}`).join('|')})`, 'ig');
 
   // 제외할 태그 중 a태그에 대한 처리
   let tagRegArr: RegExp[] = [];
@@ -31,6 +35,8 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
 
   const tagReg = new RegExp(tagRegArr.map((regex) => regex.source).join('|'), 'g');
 
+  const composedRegex = new RegExp(`${includeRegex.source}(?=${excludeRegex.source})`, 'gi');
+
   splitedMarkdown.forEach((line) => {
     const trimedLine = line.trim();
 
@@ -40,6 +46,14 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
 
     const arr = [...matchedWord];
 
-    if (arr.length !== 0) console.log(arr, trimedLine);
+    // if (arr.length !== 0) console.log(arr, trimedLine);
+
+    const arr2 = [...trimedLine.matchAll(composedRegex)];
+
+    if (arr2.length) console.log(arr2, trimedLine);
   });
+
+  console.log(includeRegex);
+  console.log(excludeRegex);
+  console.log(composedRegex);
 }
