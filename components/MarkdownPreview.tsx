@@ -6,7 +6,7 @@ import './markdown-preview.css';
 
 export default function MarkdownPreview({ markdown }: { markdown: string }) {
   return (
-    <div className='markdown'>
+    <div className='markdown overflow-y-scroll'>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
     </div>
   );

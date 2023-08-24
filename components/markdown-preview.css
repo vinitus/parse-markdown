@@ -6,6 +6,9 @@
   background-color: #0a0c10;
   font-size: 16px;
   padding: 16px;
+  height: calc(100vh - 195px);
+  scrollbar-width: none;
+  scrollbar-color: black;
 }
 
 .markdown h1,
@@ -80,4 +83,8 @@ b {
 .markdown hr {
   height: 20px;
   margin: 20px 0px;
+}
+
+.markdown::-webkit-scrollbar {
+  display: none;
 }
