@@ -1,15 +1,23 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MarkdownForm from './MarkdownForm';
 import MarkdownPreview from './MarkdownPreview';
 import Button from './Button';
+import backtickAlgorithm from '@/utils/backtickAlgorithm';
 
 export default function Markdown({ markdownDataObj }: { markdownDataObj: { markdownContent: string; filename: string } }) {
   const { markdownContent, filename } = markdownDataObj;
   const [markdown, setMarkdown] = useState(markdownContent);
 
   const parsedFilename = useMemo(() => decodeURIComponent(filename) + '.md', [filename]);
+
+  useEffect(() => {
+    backtickAlgorithm(markdown, {
+      include: ['react'],
+      exclude: ['react native'],
+    });
+  }, [markdown]);
 
   return (
     <div className='flex flex-col'>
