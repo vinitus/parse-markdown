@@ -5,6 +5,9 @@ interface MarkdownParsedResultObj {
   value: string;
 }
 
+import { remark } from 'remark';
+import html from 'remark-html'; // 변환을 HTML로 할 때 사용하는 플러그인
+
 export default function markdownParser(str: string) {
   const trimedStr = str.trim();
   const test = ['# 1', '#1', '##', '###', '####', '#####', '######', '#######', '####', '####\\##'];
@@ -13,21 +16,25 @@ export default function markdownParser(str: string) {
   return trimedStr;
 }
 
-function checkHeader(str: string) {
-  let i = 0;
-  let cnt = 0;
+async function checkHeader(str: string) {
+  const markdownContent = '# Hello, *World*!';
+  const result = await remark().use(html).process(markdownContent);
+  console.log(result.contents);
 
-  for (const alpha of str) {
-    if (alpha !== '#') break;
-    i += 1;
-    cnt += 1;
-  }
+  // let i = 0;
+  // let cnt = 0;
 
-  console.log(logFn(str, i, cnt));
+  // for (const alpha of str) {
+  //   if (alpha !== '#') break;
+  //   i += 1;
+  //   cnt += 1;
+  // }
 
-  if (cnt === 0) return false;
-  if (cnt > 7) return false;
-  if (i > str.length) return false;
+  // console.log(logFn(str, i, cnt));
+
+  // if (cnt === 0) return false;
+  // if (cnt > 7) return false;
+  // if (i > str.length) return false;
 }
 
 function logFn(a: string | number, ...arg: (string | number)[]) {
