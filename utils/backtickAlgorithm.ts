@@ -24,12 +24,13 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   splitedMarkdown.forEach((line) => {
     const trimedLine = line.trim();
 
-    const includeMatchedWordIter = trimedLine.matchAll(includeRegex);
+    const checkIsExcludeTag = excludeTagToRegExp(excludeTag).test(trimedLine);
+    if (checkIsExcludeTag) return;
 
+    const includeMatchedWordIter = trimedLine.matchAll(includeRegex);
     const includeMatchedWords = [...includeMatchedWordIter];
 
     const excludeMatchedWordIter = trimedLine.matchAll(excludeRegex);
-
     const excludeMatchedWords = [...excludeMatchedWordIter];
 
     if (!includeMatchedWords.length) console.log(0, line, includeMatchedWords, excludeMatchedWords);
