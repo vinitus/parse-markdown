@@ -4,7 +4,7 @@ import { FilterTarget } from '@/utils/backtickAlgorithm';
 type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
 type StringDispatcher = React.Dispatch<React.SetStateAction<string>>;
 
-export default function FormFilter({ setFilterTarget }: { setFilterTarget: SetFilterTarget }) {
+export default function FormFilter({ filterTarget, setFilterTarget }: { filterTarget: FilterTarget; setFilterTarget: SetFilterTarget }) {
   const [includeWord, setIncldueWord] = useState('');
   const [excludeWord, setExcldueWord] = useState('');
 
