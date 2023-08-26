@@ -33,9 +33,6 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
     const excludeMatchedWordIter = trimedLine.matchAll(excludeRegex);
     const excludeMatchedWords = [...excludeMatchedWordIter];
 
-    // if (!includeMatchedWords.length) console.log(0, line, includeMatchedWords, excludeMatchedWords);
-    // else console.log(1, line, includeMatchedWords, excludeMatchedWords);
-
     if (!includeMatchedWords.length) return;
     let flag = true;
 
@@ -43,19 +40,14 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
       const { 0: includeWord, index: includeIndex } = includeWordArr;
 
       if (includeIndex === undefined) {
-        console.log('!includeIndex');
         return;
       }
-      console.log(line, includeWordArr);
 
       if (excludeMatchedWords.length) {
         excludeMatchedWords.forEach((excludeWordArr) => {
-          console.log(line);
-
           const { 0: excludeWord, index: excludeIndex } = excludeWordArr;
           // 연관없는 단어에 대한 종료처리
           if (!new RegExp(`${includeWord}`, 'gi').test(excludeWord)) {
-            console.log('일치안함');
             return;
           }
 
@@ -66,12 +58,10 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
 
             // typescript undefined 에러 제거를 위한 조건문, 이 상황은 나올 이유가 없음
             if (index === undefined || !excludeIndex === undefined) {
-              console.log(index, excludeIndex);
               return;
             }
 
             if (includeIndex - index === excludeIndex) {
-              console.log('\\b \\b 처리 됨');
               flag = false;
               return;
             }
@@ -79,18 +69,16 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
 
           // exclude의 단어가 include의 뒤에 무언가 추가된 형태의 새로운 단어일 경우에 대한 처리
           if (new RegExp(`\\b${includeWord}\\B`, 'gi').test(excludeWord)) {
-            console.log('\\b \\B 처리 됨');
             flag = false;
             return;
           }
 
           if (flag) {
-            console.log('good');
             splitedMarkdown[n] =
               splitedMarkdown[n].substring(0, includeIndex + pushWordIdx) +
               `\`${includeWord}\`` +
               splitedMarkdown[n].substring(includeIndex + includeWord.length + pushWordIdx) +
-              '\n';
+              '';
             pushWordIdx += 2;
           }
         });
@@ -99,13 +87,12 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
           splitedMarkdown[n].substring(0, includeIndex + pushWordIdx) +
           `\`${includeWord}\`` +
           splitedMarkdown[n].substring(includeIndex + includeWord.length + pushWordIdx) +
-          '\n';
+          '';
       }
     });
   });
 
-  splitedMarkdown.forEach((line) => console.log(line));
-  console.log(includeRegex, excludeRegex);
+  return splitedMarkdown.join('\n');
 }
 
 function excludeTagToRegExp(excludeReg: string[]) {
