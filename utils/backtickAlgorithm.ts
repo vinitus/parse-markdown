@@ -1,4 +1,4 @@
-interface FilterTarget {
+export interface FilterTarget {
   include: string[];
   exclude: string[];
   excludeTag: string[];
