@@ -20,7 +20,8 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   // exclude 정규식 생성, exclude는 해당 문자열이 들어간 모든 것을 해야할듯?
   const excludeRegex = new RegExp(`${exclude.join('|')}`, 'gi');
 
-  splitedMarkdown.forEach((line) => {
+  splitedMarkdown.forEach((line, n) => {
+    let pushWordIdx = 0;
     const trimedLine = line.trim();
 
     const checkIsExcludeTag = excludeTagToRegExp(excludeTag).test(trimedLine);
@@ -32,10 +33,68 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
     const excludeMatchedWordIter = trimedLine.matchAll(excludeRegex);
     const excludeMatchedWords = [...excludeMatchedWordIter];
 
-    if (!includeMatchedWords.length) console.log(0, line, includeMatchedWords, excludeMatchedWords);
-    else console.log(1, line, includeMatchedWords, excludeMatchedWords);
+    // if (!includeMatchedWords.length) console.log(0, line, includeMatchedWords, excludeMatchedWords);
+    // else console.log(1, line, includeMatchedWords, excludeMatchedWords);
+
+    if (!includeMatchedWords.length) return;
+
+    includeMatchedWords.forEach((includeWordArr) => {
+      const { 0: includeWord, index: includeIndex } = includeWordArr;
+
+      if (includeIndex === undefined) {
+        console.log('!includeIndex');
+        return;
+      }
+
+      excludeMatchedWords.forEach((excludeWordArr) => {
+        let flag = true;
+
+        const { 0: excludeWord, index: excludeIndex } = excludeWordArr;
+        // 연관없는 단어에 대한 종료처리
+        if (!new RegExp(`${includeWord}`, 'gi').test(excludeWord)) {
+          console.log('일치안함');
+          return;
+        }
+
+        // 띄어져있는 단어에 대한 처리
+        if (new RegExp(`\\b${includeWord}\\b`, 'gi').test(excludeWord)) {
+          // 타겟단어는 exclude의 중앙 단어임
+          const { index } = [...excludeWord.matchAll(new RegExp(`\\b${includeWord}\\b`, 'gi'))][0];
+
+          // typescript undefined 에러 제거를 위한 조건문, 이 상황은 나올 이유가 없음
+          if (index === undefined || !excludeIndex === undefined) {
+            console.log(index, excludeIndex);
+            return;
+          }
+
+          if (includeIndex - index === excludeIndex) {
+            console.log('\\b \\b 처리 됨');
+            flag = false;
+            return;
+          }
+        }
+
+        // exclude의 단어가 include의 뒤에 무언가 추가된 형태의 새로운 단어일 경우에 대한 처리
+        if (new RegExp(`\\b${includeWord}\\B`, 'gi').test(excludeWord)) {
+          console.log('\\b \\B 처리 됨');
+          flag = false;
+          return;
+        }
+
+        if (flag) {
+          console.log('good');
+          splitedMarkdown[n] =
+            splitedMarkdown[n].substring(0, includeIndex + pushWordIdx) +
+            `\`${includeWord}\`` +
+            splitedMarkdown[n].substring(includeIndex + includeWord.length + pushWordIdx) +
+            '\n';
+          pushWordIdx += 2;
+        }
+      });
+    });
   });
 
+  splitedMarkdown.forEach((line) => console.log(line));
   console.log(includeRegex, excludeRegex);
 }
 
