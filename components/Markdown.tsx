@@ -4,11 +4,16 @@ import { useEffect, useMemo, useState } from 'react';
 import MarkdownForm from './MarkdownForm';
 import MarkdownPreview from './MarkdownPreview';
 import Button from './Button';
-import backtickAlgorithm from '@/utils/backtickAlgorithm';
+import backtickAlgorithm, { FilterTarget } from '@/utils/backtickAlgorithm';
 
 export default function Markdown({ markdownDataObj }: { markdownDataObj: { markdownContent: string; filename: string } }) {
   const { markdownContent, filename } = markdownDataObj;
   const [markdown, setMarkdown] = useState(markdownContent);
+  const [filterTarget, setFilterTarget] = useState<FilterTarget>({
+    include: ['http', 'react', 'port', 'portal', 'sport'],
+    exclude: ['react native', 'aport', 'port 8080', 'portable'],
+    excludeTag: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'],
+  });
 
   const parsedFilename = useMemo(() => decodeURIComponent(filename) + '.md', [filename]);
 
@@ -22,13 +27,7 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
           <Button
             type='black'
             onClick={() => {
-              setMarkdown(
-                backtickAlgorithm(markdown, {
-                  include: ['http', 'react', 'port', 'portal', 'sport'],
-                  exclude: ['react native', 'aport', 'port 8080', 'portable'],
-                  excludeTag: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'],
-                })
-              );
+              setMarkdown(backtickAlgorithm(markdown, filterTarget));
             }}
           >
             change
