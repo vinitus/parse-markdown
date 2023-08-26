@@ -15,8 +15,8 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   // statement를 기반으로 한 정규식 만들기
   const { include, includeTag, exclude, excludeTag } = filterTarget;
 
-  // include 정규식 생성, 앞은 바운더리로 하고 뒤는 어떤 단어가 왔으나 한글이면 포함, 영어면 미포함
-  const includeRegex = new RegExp(`\\b(?:${include.join('|')})(?=.*[가-힣]|\\b)(?!.*[a-zA-Z])`, 'gi');
+  // include 정규식 생성, 앞은 공백이 아닌 문자로 하고 뒤는 어떤 단어가 왔으나 영어면 전부 미포함
+  const includeRegex = new RegExp(`(?<!\\S)(?:${include.join('|')})(?![a-zA-Z])`, 'gi');
 
   // exclude 정규식 생성, exclude는 해당 문자열이 들어간 모든 것을 해야할듯?
   const excludeRegex = new RegExp(`${exclude.join('|')}`, 'gi');
