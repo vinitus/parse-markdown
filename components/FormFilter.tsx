@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { FilterTarget } from '@/utils/backtickAlgorithm';
 
 type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
@@ -8,17 +8,7 @@ export default function FormFilter({ filterTarget, setFilterTarget }: { filterTa
   const [includeWord, setIncldueWord] = useState('');
   const [excludeWord, setExcldueWord] = useState('');
 
-  function enterFn(event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher, word: string) {
-    if (event.key !== 'Enter') return;
-    setFilterTarget((prev) => {
-      if (isDuplicated(prev[target], target)) return prev;
-
-      prev[target].push(word);
-      return prev;
-    });
-
-    dispatcher('');
-  }
+  const enterFn = useMemo(() => enterHandler(setFilterTarget), [setFilterTarget]);
 
   return (
     <div className='bg-[#272b33] p-2'>
@@ -79,4 +69,18 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
 
 function isDuplicated(arr: string[], str: string) {
   return arr.includes(str);
+}
+
+function enterHandler(filterTargetDispatcher: SetFilterTarget) {
+  return (event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher, word: string) => {
+    if (event.key !== 'Enter') return;
+    filterTargetDispatcher((prev) => {
+      if (isDuplicated(prev[target], target)) return prev;
+
+      prev[target].push(word);
+      return prev;
+    });
+
+    dispatcher('');
+  };
 }
