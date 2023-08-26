@@ -5,6 +5,7 @@ import MarkdownForm from './MarkdownForm';
 import MarkdownPreview from './MarkdownPreview';
 import Button from './Button';
 import backtickAlgorithm, { FilterTarget } from '@/utils/backtickAlgorithm';
+import FormFilter from './FormFilter';
 
 export default function Markdown({ markdownDataObj }: { markdownDataObj: { markdownContent: string; filename: string } }) {
   const { markdownContent, filename } = markdownDataObj;
@@ -42,6 +43,7 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
           </Button>
         </div>
       </span>
+      <FormFilter />
       <div className='flex flex-row'>
         <MarkdownForm markdown={markdown} setMarkdown={setMarkdown} />
         <MarkdownPreview markdown={markdown} />
