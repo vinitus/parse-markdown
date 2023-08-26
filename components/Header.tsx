@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import blogLogo from '@/public/blog-logo.png';
 import navbarCss from '@/components/navbar.module.css';
-import { Input } from './Input';
 
 export default function Header() {
   return (
@@ -21,7 +19,10 @@ export default function Header() {
         </div>
         {/* search */}
         <div className={navbarCss.navbarSearchArea}>
-          <Input tagType='button' />
+          <button className={navbarCss.navbarSearchBox}>
+            검색
+            <p className={navbarCss.navbarSearchBoxButton}>검색</p>
+          </button>
           <a href='' className={navbarCss.navbarContactButton}>
             <p className={navbarCss.navbarContactButtonFont}>Contact</p>
           </a>
