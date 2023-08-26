@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, ChangeEvent } from 'react';
-// import markdownFormCss from './markdownForm.module.css';
 import './MarkdownForm.css';
 
 interface Props {
