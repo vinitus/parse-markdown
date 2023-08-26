@@ -1,7 +1,8 @@
 'use client';
 
 import { useRef, ChangeEvent } from 'react';
-import markdownFormCss from './markdownForm.module.css';
+// import markdownFormCss from './markdownForm.module.css';
+import './markdownForm.css';
 
 interface Props {
   markdown: string;
@@ -28,7 +29,7 @@ export default function MarkdownForm({ markdown, setMarkdown }: Props) {
             textareaRef.current?.blur();
           }}
           ref={textareaRef}
-          className={`w-full h-full bg-[#0a0c10] p-4 ${markdownFormCss.markdownFormScrollbar}`}
+          className={`w-full h-full bg-[#0a0c10] p-4 markdownFormScrollbar`}
         />
       </form>
     </div>

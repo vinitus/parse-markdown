@@ -1,0 +1,3 @@
+.markdownFormScrollbar::-webkit-scrollbar {
+  display: none;
+}
