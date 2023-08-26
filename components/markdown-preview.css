@@ -88,3 +88,10 @@ b {
 .markdown::-webkit-scrollbar {
   display: none;
 }
+.markdown code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(158, 167, 179, 0.4);
+  border-radius: 6px;
+}
