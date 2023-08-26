@@ -19,7 +19,7 @@ export default function MarkdownForm({ markdown, setMarkdown }: Props) {
         <textarea
           name='markdown-editor'
           id='markdown-editor'
-          defaultValue={markdown}
+          value={markdown}
           onChange={markdownChangeHandler}
           className={`w-full h-full bg-[#0a0c10] p-4 ${markdownFormCss.markdownFormScrollbar}`}
         />
