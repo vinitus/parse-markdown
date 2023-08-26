@@ -8,12 +8,12 @@ export default function FormFilter({ filterTarget, setFilterTarget }: { filterTa
   const [includeWord, setIncldueWord] = useState('');
   const [excludeWord, setExcldueWord] = useState('');
 
-  function enterFn(event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher) {
+  function enterFn(event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher, word: string) {
     if (event.key !== 'Enter') return;
     setFilterTarget((prev) => {
       if (isDuplicated(prev[target], target)) return prev;
 
-      prev[target].push(includeWord);
+      prev[target].push(word);
       return prev;
     });
 
@@ -21,12 +21,20 @@ export default function FormFilter({ filterTarget, setFilterTarget }: { filterTa
   }
 
   return (
-    <div className='bg-[#272b33] p-2 text-base'>
-      <Input placeholder='include' value={includeWord} dispatcher={setIncldueWord} enterFn={enterFn} />
-      <Button>추가하기</Button>
-      <br />
-      <Input placeholder='exclude' value={excludeWord} dispatcher={setExcldueWord} enterFn={enterFn} />
-      <Button>추가하기</Button>
+    <div className='bg-[#272b33] p-2'>
+      <div className='text-[75%] leading-normal align-middle'>
+        <Input placeholder='include' value={includeWord} dispatcher={setIncldueWord} enterFn={enterFn} />
+        <Button>추가하기</Button>
+        <span className='mr-2'>|</span>
+        <TargetKeywordWrapper target='include' targetArr={filterTarget.include} />
+      </div>
+
+      <div className='text-[75%] leading-normal align-middle'>
+        <Input placeholder='exclude' value={excludeWord} dispatcher={setExcldueWord} enterFn={enterFn} />
+        <Button>추가하기</Button>
+        <span className='mr-2'>|</span>
+        <TargetKeywordWrapper target='exclude' targetArr={filterTarget.exclude} />
+      </div>
     </div>
   );
 }
@@ -35,7 +43,7 @@ interface InputProps {
   placeholder: 'include' | 'exclude';
   value: string;
   dispatcher: StringDispatcher;
-  enterFn: (event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher) => void;
+  enterFn: (event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher, word: string) => void;
 }
 
 function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
@@ -44,7 +52,7 @@ function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
       type='text'
       value={value}
       onChange={(event) => dispatcher(event.target.value)}
-      onKeyDown={(event) => enterFn(event, placeholder, dispatcher)}
+      onKeyDown={(event) => enterFn(event, placeholder, dispatcher, value)}
       placeholder={placeholder}
       className='border border-[#7a828e] rounded-md py-1 px-2 bg-[#0a0c10] text-[#f0f3f6] text-xs mr-2 my-1'
     />
@@ -53,9 +61,19 @@ function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
 
 function Button({ children }: { children: string }) {
   return (
-    <button type='button' className='border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 text-[75%] leading-normal'>
+    <button type='button' className='border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]'>
       {children}
     </button>
+  );
+}
+
+function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
+  return (
+    <span className='overflow-x-scroll h-9 whitespace-nowrap inline-flex max-w-[calc(100%-245.234px)] aria-hidden:bg-wheet'>
+      {targetArr.map((item, idx) => (
+        <Button key={`${target}-${idx}`}>{item}</Button>
+      ))}
+    </span>
   );
 }
 
