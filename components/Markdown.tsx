@@ -43,7 +43,7 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
           </Button>
         </div>
       </span>
-      <FormFilter filterTarget={filterTarget} setFilterTarget={setFilterTarget} />
+      <FormFilter setFilterTarget={setFilterTarget} />
       <div className='flex flex-row'>
         <MarkdownForm markdown={markdown} setMarkdown={setMarkdown} />
         <MarkdownPreview markdown={markdown} />
