@@ -1,4 +1,12 @@
-export default function FormFilter() {
+import { FilterTarget } from '@/utils/backtickAlgorithm';
+
+export default function FormFilter({
+  filterTarget,
+  setFilterTarget,
+}: {
+  filterTarget: FilterTarget;
+  setFilterTarget: React.Dispatch<React.SetStateAction<FilterTarget>>;
+}) {
   return (
     <div className='bg-[#272b33] p-2 text-base'>
       <Input placeholder='include' />
