@@ -18,19 +18,30 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
         <p className='min-h-8 px-2 py-1 font-bold border border-[#7a828e] rounded-md outline-none inline-flex items-stretch text-[#7a828e] bg-[#9ea7b3] bg-opacity-0'>
           {parsedFilename}
         </p>
-        <Button
-          onClick={() => {
-            setMarkdown(
-              backtickAlgorithm(markdown, {
-                include: ['http', 'react', 'port', 'portal', 'sport'],
-                exclude: ['react native', 'aport', 'port 8080', 'portable'],
-                excludeTag: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'],
-              })
-            );
-          }}
-        >
-          change
-        </Button>
+        <div className='inline-flex gap-1'>
+          <Button
+            type='black'
+            onClick={() => {
+              setMarkdown(
+                backtickAlgorithm(markdown, {
+                  include: ['http', 'react', 'port', 'portal', 'sport'],
+                  exclude: ['react native', 'aport', 'port 8080', 'portable'],
+                  excludeTag: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'],
+                })
+              );
+            }}
+          >
+            change
+          </Button>
+          <Button
+            type='white'
+            onClick={() => {
+              console.log('fliter');
+            }}
+          >
+            filter
+          </Button>
+        </div>
       </span>
       <div className='flex flex-row'>
         <MarkdownForm markdown={markdown} setMarkdown={setMarkdown} />
