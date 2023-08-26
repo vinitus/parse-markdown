@@ -15,7 +15,6 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
   useEffect(() => {
     backtickAlgorithm(markdown, {
       include: ['http', 'react', 'port', 'portal', 'sport'],
-      includeTag: [],
       exclude: ['react native', 'aport', 'port 8080', 'portable'],
       excludeTag: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'],
     });

@@ -1,6 +1,5 @@
 interface FilterTarget {
   include: string[];
-  includeTag: string[];
   exclude: string[];
   excludeTag: string[];
 }
@@ -13,7 +12,7 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   let result = '';
 
   // statement를 기반으로 한 정규식 만들기
-  const { include, includeTag, exclude, excludeTag } = filterTarget;
+  const { include, exclude, excludeTag } = filterTarget;
 
   // include 정규식 생성, 앞은 공백이 아닌 문자로 하고 뒤는 어떤 단어가 왔으나 영어면 전부 미포함
   const includeRegex = new RegExp(`(?<!\\S)(?:${include.join('|')})(?![a-zA-Z])`, 'gi');
