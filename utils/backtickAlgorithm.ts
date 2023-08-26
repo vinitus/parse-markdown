@@ -9,32 +9,14 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   // 줄바꿈을 기준으로 배열로 나누기
   const splitedMarkdown = markdown.split('\n');
 
-  // 순회, 문자열을 미리 하나 선언하고, 조건에 맞게 바꿔가야한다고 생각이 듬
+  // 문자열을 미리 하나 선언하고, 조건에 맞게 바꿔가야한다고 생각이 듬
   let result = '';
 
   // statement를 기반으로 한 정규식 만들기
   const { include, includeTag, exclude, excludeTag } = filterTarget;
-  console.clear();
 
-  console.log(include, exclude);
-
-  // 포함할 정규식
-  const includeRegex = new RegExp(
-    include
-      .map((includeWord) => {
-        const reg = new RegExp(`${includeWord}`, 'ig');
-
-        for (const item of exclude) {
-          if (!reg.test(item)) continue;
-          if (new RegExp(`\b${includeWord}\b`, 'ig').test(item)) {
-          }
-        }
-
-        return reg.source;
-      })
-      .join('|'),
-    'ig'
-  );
+  // include 정규식 생성, 앞은 바운더리로 하고 뒤는 어떤 단어가 왔으나 한글이면 포함, 영어면 미포함
+  const includeRegex = new RegExp(`\\b(?:${include.join('|')})(?=.*[가-힣])(?!.*[a-zA-Z])`, 'gi');
 
   splitedMarkdown.forEach((line) => {
     const trimedLine = line.trim();
