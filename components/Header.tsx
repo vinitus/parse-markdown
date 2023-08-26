@@ -19,15 +19,21 @@ export default function Header() {
         </div>
         {/* search */}
         <div className={navbarCss.navbarSearchArea}>
-          <button className={navbarCss.navbarSearchBox}>
-            검색
-            <p className={navbarCss.navbarSearchBoxButton}>검색</p>
-          </button>
+          <Input />
           <a href='' className={navbarCss.navbarContactButton}>
             <p className={navbarCss.navbarContactButtonFont}>Contact</p>
           </a>
         </div>
       </nav>
     </header>
+  );
+}
+
+export function Input() {
+  return (
+    <button className={navbarCss.navbarSearchBox}>
+      검색
+      <p className={navbarCss.navbarSearchBoxButton}>검색</p>
+    </button>
   );
 }
