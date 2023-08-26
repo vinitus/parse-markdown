@@ -11,15 +11,7 @@ export default function FormFilter({ filterTarget, setFilterTarget }: { filterTa
   return (
     <div className='bg-[#272b33] p-2 text-base '>
       <Input tagType='input'>
-        <input
-          type='text'
-          value={includeWord}
-          onChange={(event) => {
-            console.log(event);
-            setIncludeWord(event.target.value);
-          }}
-          className='opacity-0 w-full'
-        />
+        <input type='text' value={includeWord} onChange={(event) => setIncludeWord(event.target.value)} className='opacity-0 w-full' />
       </Input>
       <br />
       <Input tagType='input'>
