@@ -2,7 +2,7 @@
 
 import { useRef, ChangeEvent } from 'react';
 // import markdownFormCss from './markdownForm.module.css';
-import './markdownForm.css';
+import './MarkdownForm.css';
 
 interface Props {
   markdown: string;
@@ -17,7 +17,7 @@ export default function MarkdownForm({ markdown, setMarkdown }: Props) {
   }
 
   return (
-    <div className='w-[50%] h-[calc(100vh-195px)]'>
+    <div className='w-[49%] h-[calc(100vh-195px)]'>
       <form action='' className='h-full'>
         <textarea
           name='markdown-editor'
@@ -29,7 +29,7 @@ export default function MarkdownForm({ markdown, setMarkdown }: Props) {
             textareaRef.current?.blur();
           }}
           ref={textareaRef}
-          className={`w-full h-full bg-[#0a0c10] p-4 markdownFormScrollbar`}
+          className={`w-full h-full bg-[#0a0c10] p-4 markdownform-textarea outline-0`}
         />
       </form>
     </div>
