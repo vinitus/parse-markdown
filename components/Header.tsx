@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import blogLogo from '@/public/blog-logo.png';
 import navbarCss from '@/components/navbar.module.css';
+import { Input } from './Input';
 
 export default function Header() {
   return (
@@ -19,21 +21,12 @@ export default function Header() {
         </div>
         {/* search */}
         <div className={navbarCss.navbarSearchArea}>
-          <Input />
+          <Input tagType='button' />
           <a href='' className={navbarCss.navbarContactButton}>
             <p className={navbarCss.navbarContactButtonFont}>Contact</p>
           </a>
         </div>
       </nav>
     </header>
-  );
-}
-
-export function Input() {
-  return (
-    <button className={navbarCss.navbarSearchBox}>
-      검색
-      <p className={navbarCss.navbarSearchBoxButton}>검색</p>
-    </button>
   );
 }
