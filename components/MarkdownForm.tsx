@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent } from 'react';
+import { useRef, ChangeEvent } from 'react';
 import markdownFormCss from './markdownForm.module.css';
 
 interface Props {
@@ -9,6 +9,8 @@ interface Props {
 }
 
 export default function MarkdownForm({ markdown, setMarkdown }: Props) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   function markdownChangeHandler(event: ChangeEvent<HTMLTextAreaElement>) {
     setMarkdown(event.target.value);
   }
@@ -21,6 +23,11 @@ export default function MarkdownForm({ markdown, setMarkdown }: Props) {
           id='markdown-editor'
           value={markdown}
           onChange={markdownChangeHandler}
+          onKeyDown={(event) => {
+            if (event.key !== 'Escape') return;
+            textareaRef.current?.blur();
+          }}
+          ref={textareaRef}
           className={`w-full h-full bg-[#0a0c10] p-4 ${markdownFormCss.markdownFormScrollbar}`}
         />
       </form>
