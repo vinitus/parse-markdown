@@ -13,12 +13,13 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
   const parsedFilename = useMemo(() => decodeURIComponent(filename) + '.md', [filename]);
 
   useEffect(() => {
-    backtickAlgorithm(markdown, {
-      // include: ['http', 'react', 'port', 'portal', 'sport'],
-      include: ['http'],
-      exclude: ['react native', 'aport', 'port 8080', 'portable'],
-      excludeTag: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'],
-    });
+    setMarkdown(
+      backtickAlgorithm(markdown, {
+        include: ['http', 'react', 'port', 'portal', 'sport'],
+        exclude: ['react native', 'aport', 'port 8080', 'portable'],
+        excludeTag: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a'],
+      })
+    );
   }, [markdown]);
 
   return (
