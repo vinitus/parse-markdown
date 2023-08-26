@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { FilterTarget } from '@/utils/backtickAlgorithm';
 
-export default function FormFilter({ setFilterTarget }: { setFilterTarget: React.Dispatch<React.SetStateAction<FilterTarget>> }) {
+type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
+type StringDispatcher = React.Dispatch<React.SetStateAction<string>>;
+
+export default function FormFilter({ setFilterTarget }: { setFilterTarget: SetFilterTarget }) {
   const [includeWord, setIncldueWord] = useState('');
   const [excludeWord, setExcldueWord] = useState('');
 
-  function enterFn(event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: React.Dispatch<React.SetStateAction<string>>) {
+  function enterFn(event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher) {
     if (event.key !== 'Enter') return;
     setFilterTarget((prev) => {
       if (isDuplicated(prev[target], target)) return prev;
@@ -28,17 +31,14 @@ export default function FormFilter({ setFilterTarget }: { setFilterTarget: React
   );
 }
 
-function Input({
-  placeholder,
-  value,
-  dispatcher,
-  enterFn,
-}: {
+interface InputProps {
   placeholder: 'include' | 'exclude';
   value: string;
-  dispatcher: React.Dispatch<React.SetStateAction<string>>;
-  enterFn: (event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: React.Dispatch<React.SetStateAction<string>>) => void;
-}) {
+  dispatcher: StringDispatcher;
+  enterFn: (event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher) => void;
+}
+
+function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
   return (
     <input
       type='text'
