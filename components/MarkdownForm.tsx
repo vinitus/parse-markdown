@@ -16,7 +16,7 @@ export default function MarkdownForm({ markdown, setMarkdown }: Props) {
   }
 
   return (
-    <div className='w-[49%] h-[calc(100vh-291px)]'>
+    <div className='w-[49%] h-[calc(100vh-307px)]'>
       <form action='' className='h-full'>
         <textarea
           name='markdown-editor'
