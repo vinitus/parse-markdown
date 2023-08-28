@@ -64,7 +64,8 @@ function Button({ children, className, isOverflow }: { children: string; classNa
 }
 
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
-  const [isOverflow, setIsOverflow] = useState(false);
+  const [leftIsOverflow, setleftIsOverflow] = useState(false);
+  const [rightIsOverflow, setrightIsOverflow] = useState(false);
   const wordWrapSpanRef = useRef<HTMLSpanElement>(null);
 
   function scrollEventHandler() {
@@ -74,12 +75,17 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
 
   useEffect(() => {
     const wordWrapSpanTag = wordWrapSpanRef.current;
-    console.log(wordWrapSpanTag?.offsetWidth, wordWrapSpanTag?.scrollWidth);
+    if (wordWrapSpanTag === null) {
+      new Error('렌더링 오류');
+      return;
+    }
+
+    const { offsetWidth, scrollWidth } = wordWrapSpanTag;
   }, [targetArr.length]);
 
   return (
     <span className='inline-flex h-9 w-[calc(100%-246px)] aria-hidden:bg-wheet'>
-      <Button isOverflow={isOverflow}>←</Button>
+      <Button isOverflow={leftIsOverflow}>←</Button>
       <span className='overflow-x-scroll whitespace-nowrap w-full mx-2 pr-1 gap-1 flex' ref={wordWrapSpanRef} onScroll={scrollEventHandler}>
         {targetArr.map((item, idx) => (
           <Button key={`${target}-${idx}`} className='mr-0'>
@@ -87,7 +93,7 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
           </Button>
         ))}
       </span>
-      <Button className='ml-auto' isOverflow={isOverflow}>
+      <Button className='ml-auto' isOverflow={rightIsOverflow}>
         →
       </Button>
     </span>
