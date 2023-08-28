@@ -49,7 +49,7 @@ function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
   );
 }
 
-function Button({ children, className, isOverflow }: { children: string; className?: string; isOverflow?: boolean }) {
+function Button({ children, className, isOverflow, style }: { children: string; className?: string; isOverflow?: boolean; style?: React.CSSProperties }) {
   let btnClass = 'border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]';
   // const disabledClass = 'disabled:hover:bg-[#0a0c10] disabled:border-[#3a323e] disabled:text-[#a0a3a6]';
   const disabledClass = 'disabled:opacity-50 disabled:hover:bg-inherit';
@@ -57,7 +57,7 @@ function Button({ children, className, isOverflow }: { children: string; classNa
   if (className) btnClass = className + ' ' + btnClass;
 
   return (
-    <button type='button' className={btnClass + ' ' + disabledClass} disabled={isOverflow !== undefined && !isOverflow}>
+    <button type='button' style={style && style} className={btnClass + ' ' + disabledClass} disabled={isOverflow !== undefined && !isOverflow}>
       {children}
     </button>
   );
@@ -136,7 +136,7 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
       <Button isOverflow={leftIsOverflow}>←</Button>
       <span className='overflow-x-scroll whitespace-nowrap w-full mx-2 pr-1 gap-1 flex' ref={wordWrapSpanRef} onScroll={scrollEventHandler}>
         {targetArr.map((item, idx) => (
-          <Button key={`${target}-${idx}`} className='mr-0'>
+          <Button key={`${target}-${idx}`} className='mr-0' style={{ marginRight: '0px' }}>
             {item}
           </Button>
         ))}
