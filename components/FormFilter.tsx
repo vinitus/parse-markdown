@@ -109,6 +109,7 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
     }
 
     const { offsetWidth, scrollWidth } = wordWrapSpanTag;
+    if (offsetWidth === scrollWidth) return;
   }, [targetArr.length]);
 
   return (
