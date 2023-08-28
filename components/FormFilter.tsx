@@ -51,16 +51,12 @@ function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
 
 function Button({ children, className, isOverflow }: { children: string; className?: string; isOverflow?: boolean }) {
   let btnClass = 'border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]';
-  const disabledClass = 'disabled:hover:bg-[#0a0c10]';
+  const disabledClass = 'disabled:hover:bg-[#0a0c10] disabled:border-[#3a323e] disabled:text-[#a0a3a6]';
 
   if (className) btnClass += ' ' + className;
 
   return (
-    <button
-      type='button'
-      className={btnClass + ' disabled:hover:bg-[#0a0c10] disabled:border-[#3a323e] disabled:text-[#a0a3a6]'}
-      disabled={isOverflow !== undefined && isOverflow}
-    >
+    <button type='button' className={btnClass + ' ' + disabledClass} disabled={isOverflow !== undefined && isOverflow}>
       {children}
     </button>
   );
