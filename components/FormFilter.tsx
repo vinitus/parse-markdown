@@ -70,6 +70,10 @@ function scrollCalc(tag: HTMLElement): 'left' | 'right' | 'both' {
   return 'both';
 }
 
+function arrowStateUpdateFn(leftDispatcher: React.Dispatch<React.SetStateAction<boolean>>, rightDispatcher: React.Dispatch<React.SetStateAction<boolean>>) {
+  return () => {};
+}
+
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
   const [leftIsOverflow, setleftIsOverflow] = useState(false);
   const [rightIsOverflow, setrightIsOverflow] = useState(false);
