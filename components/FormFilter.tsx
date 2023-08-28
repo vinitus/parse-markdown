@@ -63,6 +63,13 @@ function Button({ children, className, isOverflow }: { children: string; classNa
   );
 }
 
+function scrollCalc(tag: HTMLElement): 'left' | 'right' | 'both' {
+  const { offsetWidth, scrollLeft, scrollWidth } = tag;
+  if (scrollLeft === 0) return 'left';
+  if (scrollLeft === scrollWidth - offsetWidth) return 'right';
+  return 'both';
+}
+
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
   const [leftIsOverflow, setleftIsOverflow] = useState(false);
   const [rightIsOverflow, setrightIsOverflow] = useState(false);
