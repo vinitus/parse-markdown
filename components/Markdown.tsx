@@ -10,6 +10,7 @@ import FormFilter from './FormFilter';
 export default function Markdown({ markdownDataObj }: { markdownDataObj: { markdownContent: string; filename: string } }) {
   const { markdownContent, filename } = markdownDataObj;
   const [markdown, setMarkdown] = useState(markdownContent);
+  const [filterOpen, setFilterOpen] = useState(false);
   const [filterTarget, setFilterTarget] = useState<FilterTarget>({
     include: ['http', 'react', 'port', 'portal', 'sport'],
     exclude: ['react native', 'aport', 'port 8080', 'portable'],
@@ -36,14 +37,14 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
           <Button
             type='white'
             onClick={() => {
-              console.log('fliter');
+              setFilterOpen(!filterOpen);
             }}
           >
             filter
           </Button>
         </div>
       </span>
-      <FormFilter filterTarget={filterTarget} setFilterTarget={setFilterTarget} />
+      {filterOpen && <FormFilter filterTarget={filterTarget} setFilterTarget={setFilterTarget} />}
       <div className='flex flex-row'>
         <MarkdownForm markdown={markdown} setMarkdown={setMarkdown} />
         <MarkdownPreview markdown={markdown} />
