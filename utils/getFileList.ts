@@ -1,6 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+interface FileDir {
+  [key: string]: string | FileDir;
+}
+
 export default function getFileList() {
   const publicPath = path.join(process.cwd(), 'public');
 
