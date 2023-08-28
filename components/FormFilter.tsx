@@ -73,7 +73,7 @@ function scrollCalc(tag: HTMLElement): ArrowDir {
 type ArrowDir = 'left' | 'right' | 'both';
 
 function arrowStateUpdateFn(leftDispatcher: React.Dispatch<React.SetStateAction<boolean>>, rightDispatcher: React.Dispatch<React.SetStateAction<boolean>>) {
-  return (dir: ArrowDir) => {
+  return (dir: ArrowDir | 'disabled') => {
     switch (dir) {
       case 'left': {
         leftDispatcher(true);
@@ -83,9 +83,13 @@ function arrowStateUpdateFn(leftDispatcher: React.Dispatch<React.SetStateAction<
         leftDispatcher(false);
         rightDispatcher(true);
       }
-      default: {
+      case 'both': {
         leftDispatcher(true);
         rightDispatcher(true);
+      }
+      default: {
+        leftDispatcher(false);
+        rightDispatcher(false);
       }
     }
   };
@@ -109,7 +113,9 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
     }
 
     const { offsetWidth, scrollWidth } = wordWrapSpanTag;
-    if (offsetWidth === scrollWidth) return;
+    if (offsetWidth === scrollWidth) {
+      //
+    }
   }, [targetArr.length]);
 
   return (
