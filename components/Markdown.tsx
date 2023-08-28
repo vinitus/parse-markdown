@@ -21,7 +21,7 @@ export default function Markdown({ markdownDataObj }: { markdownDataObj: { markd
 
   return (
     <div className='flex flex-col'>
-      <span className='h-12 px-4 flex items-center justify-between border-b border-[#f0f3f6] pb-2'>
+      <span className='h-12 px-4 flex items-center justify-between border-b border-[var(--main-font)] pb-2'>
         <p className='min-h-8 px-2 py-1 font-bold border border-[#7a828e] rounded-md outline-none inline-flex items-stretch text-[#7a828e] bg-[#9ea7b3] bg-opacity-0'>
           {parsedFilename}
         </p>

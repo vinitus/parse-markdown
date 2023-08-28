@@ -28,7 +28,7 @@ export default function MarkdownForm({ markdown, setMarkdown }: Props) {
             textareaRef.current?.blur();
           }}
           ref={textareaRef}
-          className={`w-full h-full bg-[var(--main-bg);] p-4 markdownform-textarea outline-0`}
+          className={`w-full h-full bg-[var(--main-bg)] p-4 markdownform-textarea outline-0`}
         />
       </form>
     </div>

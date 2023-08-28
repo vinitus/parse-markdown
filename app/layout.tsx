@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='kr'>
       <body className={myFont.className}>
         <Header />
-        <main className='bg-[var(--main-bg);] text-[#f0f3f6]'>
+        <main className='bg-[var(--main-bg)] text-[]'>
           <div className='max-w-screen-xl mx-auto p-10 flex flex-row w-full'>
             <Sidebar fileList={fileList} />
             {children}
