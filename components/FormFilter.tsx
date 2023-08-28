@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { FilterTarget } from '@/utils/backtickAlgorithm';
 
 type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
@@ -49,20 +49,46 @@ function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
   );
 }
 
-function Button({ children }: { children: string }) {
+function Button({ children, className }: { children: string; className?: string }) {
   return (
-    <button type='button' className='border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]'>
+    <button
+      type='button'
+      className={
+        className
+          ? `${className} border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]`
+          : 'border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]'
+      }
+    >
       {children}
     </button>
   );
 }
 
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
+  const spanRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    console.log(spanRef.current?.offsetWidth);
+    console.log(spanRef.current?.scrollLeft);
+  }, []);
+
   return (
-    <span className='overflow-x-scroll h-9 whitespace-nowrap inline-flex max-w-[calc(100%-245.234px)] aria-hidden:bg-wheet'>
-      {targetArr.map((item, idx) => (
-        <Button key={`${target}-${idx}`}>{item}</Button>
-      ))}
+    <span className='inline-flex h-9 w-[calc(100%-246px)] aria-hidden:bg-wheet justify-between gap-2'>
+      <span
+        className='overflow-x-scroll whitespace-nowrap'
+        onScroll={(event) => {
+          console.log(spanRef.current?.scrollLeft);
+          console.log(spanRef.current?.scrollTop);
+          console.log(spanRef.current?.scrollWidth);
+          console.log(spanRef.current?.clientWidth);
+        }}
+        ref={spanRef}
+      >
+        {targetArr.map((item, idx) => (
+          <Button key={`${target}-${idx}`}>{item}</Button>
+        ))}
+      </span>
+      <Button>→</Button>
     </span>
   );
 }
