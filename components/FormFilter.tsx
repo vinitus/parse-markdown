@@ -70,6 +70,8 @@ function scrollCalc(tag: HTMLElement): 'left' | 'right' | 'both' {
   return 'both';
 }
 
+type ArrowDir = 'left' | 'right' | 'both';
+
 function arrowStateUpdateFn(leftDispatcher: React.Dispatch<React.SetStateAction<boolean>>, rightDispatcher: React.Dispatch<React.SetStateAction<boolean>>) {
   return () => {};
 }
