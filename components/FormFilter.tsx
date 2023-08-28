@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { FilterTarget } from '@/utils/backtickAlgorithm';
 
 type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
@@ -76,20 +76,24 @@ function arrowStateUpdateFn(leftDispatcher: React.Dispatch<React.SetStateAction<
   return (dir: ArrowDir | 'disabled') => {
     switch (dir) {
       case 'left': {
-        leftDispatcher(true);
-        rightDispatcher(false);
-      }
-      case 'right': {
         leftDispatcher(false);
         rightDispatcher(true);
+        break;
+      }
+      case 'right': {
+        leftDispatcher(true);
+        rightDispatcher(false);
+        break;
       }
       case 'both': {
         leftDispatcher(true);
         rightDispatcher(true);
+        break;
       }
       default: {
         leftDispatcher(false);
         rightDispatcher(false);
+        break;
       }
     }
   };
@@ -102,7 +106,11 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
 
   function scrollEventHandler() {
     const wordWrapSpanTag = wordWrapSpanRef.current;
-    console.log(wordWrapSpanTag?.offsetWidth, wordWrapSpanTag?.scrollLeft, wordWrapSpanTag?.scrollWidth);
+    if (!wordWrapSpanTag) {
+      new Error('렌더링 오류');
+      return;
+    }
+    arrowUpdateFn(scrollCalc(wordWrapSpanTag));
   }
 
   const arrowUpdateFn = useMemo(() => arrowStateUpdateFn(setleftIsOverflow, setrightIsOverflow), []);
@@ -120,7 +128,7 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
       return;
     }
 
-    scrollCalc(wordWrapSpanTag);
+    arrowUpdateFn(scrollCalc(wordWrapSpanTag));
   }, [arrowUpdateFn, targetArr.length]);
 
   return (
