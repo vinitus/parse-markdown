@@ -11,7 +11,7 @@ export default function FormFilter({ filterTarget, setFilterTarget }: { filterTa
   const enterFn = useMemo(() => enterHandler(setFilterTarget), [setFilterTarget]);
 
   return (
-    <div className='border-y border-[#f0f3f6] p-2 my-2'>
+    <div className='border-b border-[#f0f3f6] px-2 my-2 py-1 pb-3'>
       <div className='text-[75%] leading-normal align-middle'>
         <Input placeholder='include' value={includeWord} dispatcher={setIncldueWord} enterFn={enterFn} />
         <Button>추가하기</Button>
