@@ -50,6 +50,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return markdownFilenameList;
   }, []);
 
+  console.log(fileList);
+
   return (
     <html lang='kr'>
       <body className={myFont.className}>
