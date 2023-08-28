@@ -42,15 +42,15 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const fileList = useMemo(() => {
-    const fileList = getFileList();
-    const markdownFileList = fileList.filter((filename) => filename.match(/\.md$/));
-    const markdownFilenameList = markdownFileList.map((filename) => filename.substring(0, filename.length - 3));
+  // const fileList = useMemo(() => {
+  //   const fileList = getFileList();
+  //   const markdownFileList = fileList.filter((filename) => filename.match(/\.md$/));
+  //   const markdownFilenameList = markdownFileList.map((filename) => filename.substring(0, filename.length - 3));
 
-    return markdownFilenameList;
-  }, []);
+  //   return markdownFilenameList;
+  // }, []);
 
-  console.log(fileList);
+  console.log(getFileList());
 
   return (
     <html lang='kr'>
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className='bg-[var(--main-bg)] text-[var(--main-font)]'>
           <div className='max-w-screen-xl mx-auto p-10 flex flex-row w-full'>
-            <Sidebar fileList={fileList} />
+            <Sidebar fileList={['HTTP,TCPIP', '백틱알고리즘테스트']} />
             {children}
           </div>
         </main>
