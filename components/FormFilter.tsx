@@ -104,16 +104,16 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
   const [rightIsOverflow, setrightIsOverflow] = useState(false);
   const wordWrapSpanRef = useRef<HTMLSpanElement>(null);
 
-  function scrollEventHandler() {
+  const arrowUpdateFn = useMemo(() => arrowStateUpdateFn(setleftIsOverflow, setrightIsOverflow), []);
+
+  const scrollEventHandler = useCallback(() => {
     const wordWrapSpanTag = wordWrapSpanRef.current;
     if (!wordWrapSpanTag) {
       new Error('렌더링 오류');
       return;
     }
     arrowUpdateFn(scrollCalc(wordWrapSpanTag));
-  }
-
-  const arrowUpdateFn = useMemo(() => arrowStateUpdateFn(setleftIsOverflow, setrightIsOverflow), []);
+  }, [arrowUpdateFn]);
 
   useEffect(() => {
     const wordWrapSpanTag = wordWrapSpanRef.current;
