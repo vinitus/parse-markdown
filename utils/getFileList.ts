@@ -17,11 +17,11 @@ function filereadDFS(dir: string) {
 
   const result: FileDir = {};
   for (const file of files) {
-    const itemPath = path.join(dir, file);
-    const fileStat = fs.statSync(itemPath);
+    const filepath = path.join(dir, file);
+    const fileStat = fs.statSync(filepath);
 
     if (fileStat.isDirectory()) {
-      result[file] = filereadDFS(itemPath);
+      result[file] = filereadDFS(filepath);
     } else {
       result[file] = 'file';
     }
