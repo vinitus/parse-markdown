@@ -19,3 +19,7 @@
 body *::-webkit-scrollbar {
   display: none;
 }
+
+body {
+  background-color: #0a0c10;
+}
