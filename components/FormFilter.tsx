@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { FilterTarget } from '@/utils/backtickAlgorithm';
 
 type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
@@ -54,39 +54,34 @@ function Button({ children, className, isOverflow }: { children: string; classNa
   // const disabledClass = 'disabled:hover:bg-[#0a0c10] disabled:border-[#3a323e] disabled:text-[#a0a3a6]';
   const disabledClass = 'disabled:opacity-50 disabled:hover:bg-inherit';
 
-  if (className) btnClass += ' ' + className;
+  if (className) btnClass = className + ' ' + btnClass;
 
   return (
-    <button type='button' className={btnClass + ' ' + disabledClass} disabled={isOverflow !== undefined && isOverflow}>
+    <button type='button' className={btnClass + ' ' + disabledClass} disabled={isOverflow !== undefined && !isOverflow}>
       {children}
     </button>
   );
 }
 
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
-  const spanRef = useRef<HTMLSpanElement>(null);
   const [isOverflow, setIsOverflow] = useState(false);
 
-  useEffect(() => {
-    // console.log(spanRef.current?.offsetWidth);
-    // console.log(spanRef.current?.scrollLeft);
-    setIsOverflow(true);
-  }, []);
+  function scrollEventHandler(event: React.UIEvent<HTMLSpanElement, UIEvent>) {
+    console.log(event.currentTarget.scrollLeft);
+  }
 
   return (
     <span className='inline-flex h-9 w-[calc(100%-246px)] aria-hidden:bg-wheet'>
       <Button isOverflow={isOverflow}>←</Button>
       <span
-        className='overflow-x-scroll whitespace-nowrap'
-        onScroll={(event) => {
-          console.log(spanRef.current?.scrollLeft);
-          console.log(spanRef.current?.scrollWidth);
-          console.log(spanRef.current?.clientWidth);
-        }}
-        ref={spanRef}
+        className='overflow-x-scroll whitespace-nowrap w-full mx-2 pr-1 gap-1 flex'
+        onChange={() => console.log('change?')}
+        onScroll={(event) => console.log(event.currentTarget, event.target)}
       >
         {targetArr.map((item, idx) => (
-          <Button key={`${target}-${idx}`}>{item}</Button>
+          <Button key={`${target}-${idx}`} className='mr-0'>
+            {item}
+          </Button>
         ))}
       </span>
       <Button className='ml-auto' isOverflow={isOverflow}>
