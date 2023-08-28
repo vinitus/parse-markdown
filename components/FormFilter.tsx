@@ -105,6 +105,8 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
     console.log(wordWrapSpanTag?.offsetWidth, wordWrapSpanTag?.scrollLeft, wordWrapSpanTag?.scrollWidth);
   }
 
+  const arrowUpdateFn = useMemo(() => arrowStateUpdateFn(setleftIsOverflow, setrightIsOverflow), []);
+
   useEffect(() => {
     const wordWrapSpanTag = wordWrapSpanRef.current;
     if (wordWrapSpanTag === null) {
