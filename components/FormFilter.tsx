@@ -11,7 +11,7 @@ export default function FormFilter({ filterTarget, setFilterTarget }: { filterTa
   const enterFn = useMemo(() => enterHandler(setFilterTarget), [setFilterTarget]);
 
   return (
-    <div className='border border-[#f0f3f6] p-2 my-2'>
+    <div className='border-y border-[#f0f3f6] p-2 my-2'>
       <div className='text-[75%] leading-normal align-middle'>
         <Input placeholder='include' value={includeWord} dispatcher={setIncldueWord} enterFn={enterFn} />
         <Button>추가하기</Button>
@@ -78,7 +78,6 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
         className='overflow-x-scroll whitespace-nowrap'
         onScroll={(event) => {
           console.log(spanRef.current?.scrollLeft);
-          console.log(spanRef.current?.scrollTop);
           console.log(spanRef.current?.scrollWidth);
           console.log(spanRef.current?.clientWidth);
         }}
