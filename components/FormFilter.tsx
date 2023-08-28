@@ -156,7 +156,7 @@ function enterHandler(filterTargetDispatcher: SetFilterTarget) {
   return (event: React.KeyboardEvent<HTMLInputElement>, target: 'include' | 'exclude', dispatcher: StringDispatcher, word: string) => {
     if (event.key !== 'Enter') return;
     filterTargetDispatcher((prev) => {
-      if (isDuplicated(prev[target], target)) return prev;
+      if (isDuplicated(prev[target], word)) return prev;
 
       prev[target].push(word);
       return prev;
