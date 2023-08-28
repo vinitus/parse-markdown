@@ -116,9 +116,12 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
 
     const { offsetWidth, scrollWidth } = wordWrapSpanTag;
     if (offsetWidth === scrollWidth) {
-      //
+      arrowUpdateFn('disabled');
+      return;
     }
-  }, [targetArr.length]);
+
+    scrollCalc(wordWrapSpanTag);
+  }, [arrowUpdateFn, targetArr.length]);
 
   return (
     <span className='inline-flex h-9 w-[calc(100%-246px)] aria-hidden:bg-wheet'>
