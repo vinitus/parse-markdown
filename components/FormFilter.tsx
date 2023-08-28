@@ -63,7 +63,7 @@ function Button({ children, className, isOverflow }: { children: string; classNa
   );
 }
 
-function scrollCalc(tag: HTMLElement): 'left' | 'right' | 'both' {
+function scrollCalc(tag: HTMLElement): ArrowDir {
   const { offsetWidth, scrollLeft, scrollWidth } = tag;
   if (scrollLeft === 0) return 'left';
   if (scrollLeft === scrollWidth - offsetWidth) return 'right';
@@ -73,7 +73,22 @@ function scrollCalc(tag: HTMLElement): 'left' | 'right' | 'both' {
 type ArrowDir = 'left' | 'right' | 'both';
 
 function arrowStateUpdateFn(leftDispatcher: React.Dispatch<React.SetStateAction<boolean>>, rightDispatcher: React.Dispatch<React.SetStateAction<boolean>>) {
-  return () => {};
+  return (dir: ArrowDir) => {
+    switch (dir) {
+      case 'left': {
+        leftDispatcher(true);
+        rightDispatcher(false);
+      }
+      case 'right': {
+        leftDispatcher(false);
+        rightDispatcher(true);
+      }
+      default: {
+        leftDispatcher(true);
+        rightDispatcher(true);
+      }
+    }
+  };
 }
 
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
