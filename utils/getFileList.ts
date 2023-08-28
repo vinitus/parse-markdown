@@ -15,18 +15,17 @@ export default function getFileList() {
 function filereadDFS(dir: string) {
   const files = fs.readdirSync(dir);
 
-  const fileList: string[] = [];
+  const result: FileDir = {};
   for (const file of files) {
-    const filePath = path.join(dir, file);
-    console.log('------');
-    console.log(filePath.substring(filePath.indexOf('public') + 7, filePath.length));
-    console.log(filePath);
-    if (fs.statSync(filePath).isDirectory()) {
-      filereadDFS(filePath);
+    const itemPath = path.join(dir, file);
+    const fileStat = fs.statSync(itemPath);
+
+    if (fileStat.isDirectory()) {
+      result[file] = filereadDFS(itemPath);
     } else {
-      fileList.push(file);
+      result[file] = 'file';
     }
   }
 
-  return fileList;
+  return result;
 }
