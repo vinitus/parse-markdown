@@ -44,14 +44,14 @@ function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
       onChange={(event) => dispatcher(event.target.value)}
       onKeyDown={(event) => enterFn(event, placeholder, dispatcher, value)}
       placeholder={placeholder}
-      className='border border-[#7a828e] rounded-md py-1 px-2 bg-[#0a0c10] text-[#f0f3f6] text-xs mr-2 my-1'
+      className='border border-[#7a828e] rounded-md py-1 px-2 bg-[var(--main-bg);] text-[#f0f3f6] text-xs mr-2 my-1'
     />
   );
 }
 
 function Button({ children, className, isOverflow, style }: { children: string; className?: string; isOverflow?: boolean; style?: React.CSSProperties }) {
-  let btnClass = 'border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]';
-  // const disabledClass = 'disabled:hover:bg-[#0a0c10] disabled:border-[#3a323e] disabled:text-[#a0a3a6]';
+  let btnClass = 'border border-[#7a828e] rounded-md bg-[var(--main-bg);] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]';
+  // const disabledClass = 'disabled:hover:bg-[var(--main-bg);] disabled:border-[#3a323e] disabled:text-[#a0a3a6]';
   const disabledClass = 'disabled:opacity-50 disabled:hover:bg-inherit';
 
   if (className) btnClass = className + ' ' + btnClass;

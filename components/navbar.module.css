@@ -7,7 +7,7 @@
   z-index: 9999;
   width: 100%;
   font-size: 0.875rem;
-  background-color: #0a0c10;
+  background-color: var(--main-bg);
 }
 
 .navbarLayout {
@@ -47,7 +47,7 @@
   padding: 0 6px 0 8px;
   font-size: 14px;
   color: #8f8f8f;
-  background-color: #0a0c10;
+  background-color: var(--main-bg);
   border: 1px solid #f0f3f6;
   transition: background-color 0.1s ease;
 }
@@ -67,14 +67,14 @@
   font-family: inherit;
   border: 1px solid color(srgb 0 0 0 / 0.08);
   margin-left: 16px;
-  background-color: #0a0c10;
+  background-color: var(--main-bg);
   border: 1px solid #f0f3f6;
 }
 
 .navbarContactButton {
   border-radius: 6px;
   color: #f0f3f6;
-  background-color: #0a0c10;
+  background-color: var(--main-bg);
   border: 1px solid #f0f3f6;
   font-weight: 500;
   padding: 0 12px;

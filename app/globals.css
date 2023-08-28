@@ -21,5 +21,9 @@ body *::-webkit-scrollbar {
 }
 
 body {
-  background-color: #0a0c10;
+  background-color: var(--main-bg);
+}
+
+html {
+  --main-bg: #0a0c10;
 }
