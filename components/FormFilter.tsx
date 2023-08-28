@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { FilterTarget } from '@/utils/backtickAlgorithm';
 
 type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
@@ -67,19 +67,20 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
   const [isOverflow, setIsOverflow] = useState(false);
   const wordWrapSpanRef = useRef<HTMLSpanElement>(null);
 
-  function scrollEventHandler(event: React.UIEvent<HTMLSpanElement, UIEvent>) {
-    console.log(event.currentTarget.scrollLeft);
+  function scrollEventHandler() {
+    const wordWrapSpanTag = wordWrapSpanRef.current;
+    console.log(wordWrapSpanTag?.offsetWidth, wordWrapSpanTag?.scrollLeft, wordWrapSpanTag?.scrollWidth);
   }
+
+  useEffect(() => {
+    const wordWrapSpanTag = wordWrapSpanRef.current;
+    console.log(wordWrapSpanTag?.offsetWidth, wordWrapSpanTag?.scrollWidth);
+  }, [targetArr.length]);
 
   return (
     <span className='inline-flex h-9 w-[calc(100%-246px)] aria-hidden:bg-wheet'>
       <Button isOverflow={isOverflow}>←</Button>
-      <span
-        className='overflow-x-scroll whitespace-nowrap w-full mx-2 pr-1 gap-1 flex'
-        ref={wordWrapSpanRef}
-        onChange={() => console.log('change?')}
-        onScroll={(event) => console.log(event.currentTarget, event.target)}
-      >
+      <span className='overflow-x-scroll whitespace-nowrap w-full mx-2 pr-1 gap-1 flex' ref={wordWrapSpanRef} onScroll={scrollEventHandler}>
         {targetArr.map((item, idx) => (
           <Button key={`${target}-${idx}`} className='mr-0'>
             {item}
