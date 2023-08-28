@@ -49,15 +49,17 @@ function Input({ placeholder, value, dispatcher, enterFn }: InputProps) {
   );
 }
 
-function Button({ children, className }: { children: string; className?: string }) {
+function Button({ children, className, isOverflow }: { children: string; className?: string; isOverflow?: boolean }) {
+  let btnClass = 'border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]';
+  const disabledClass = 'disabled:hover:bg-[#0a0c10]';
+
+  if (className) btnClass += ' ' + className;
+
   return (
     <button
       type='button'
-      className={
-        className
-          ? `${className} border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]`
-          : 'border border-[#7a828e] rounded-md bg-[#0a0c10] text-[#f0f3f6] py-1 px-2 mr-2 my-1 w-auto hover:bg-[#1a1c20]'
-      }
+      className={btnClass + ' disabled:hover:bg-[#0a0c10] disabled:border-[#3a323e] disabled:text-[#a0a3a6]'}
+      disabled={isOverflow !== undefined && isOverflow}
     >
       {children}
     </button>
@@ -66,14 +68,17 @@ function Button({ children, className }: { children: string; className?: string 
 
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
   const spanRef = useRef<HTMLSpanElement>(null);
+  const [isOverflow, setIsOverflow] = useState(false);
 
   useEffect(() => {
-    console.log(spanRef.current?.offsetWidth);
-    console.log(spanRef.current?.scrollLeft);
+    // console.log(spanRef.current?.offsetWidth);
+    // console.log(spanRef.current?.scrollLeft);
+    setIsOverflow(true);
   }, []);
 
   return (
-    <span className='inline-flex h-9 w-[calc(100%-246px)] aria-hidden:bg-wheet justify-between gap-2'>
+    <span className='inline-flex h-9 w-[calc(100%-246px)] aria-hidden:bg-wheet'>
+      <Button isOverflow={isOverflow}>←</Button>
       <span
         className='overflow-x-scroll whitespace-nowrap'
         onScroll={(event) => {
@@ -87,7 +92,9 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
           <Button key={`${target}-${idx}`}>{item}</Button>
         ))}
       </span>
-      <Button>→</Button>
+      <Button className='ml-auto' isOverflow={isOverflow}>
+        →
+      </Button>
     </span>
   );
 }
