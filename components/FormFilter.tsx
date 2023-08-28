@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { FilterTarget } from '@/utils/backtickAlgorithm';
 
 type SetFilterTarget = React.Dispatch<React.SetStateAction<FilterTarget>>;
@@ -65,6 +65,7 @@ function Button({ children, className, isOverflow }: { children: string; classNa
 
 function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; target: 'include' | 'exclude' }) {
   const [isOverflow, setIsOverflow] = useState(false);
+  const wordWrapSpanRef = useRef<HTMLSpanElement>(null);
 
   function scrollEventHandler(event: React.UIEvent<HTMLSpanElement, UIEvent>) {
     console.log(event.currentTarget.scrollLeft);
@@ -75,6 +76,7 @@ function TargetKeywordWrapper({ targetArr, target }: { targetArr: string[]; targ
       <Button isOverflow={isOverflow}>←</Button>
       <span
         className='overflow-x-scroll whitespace-nowrap w-full mx-2 pr-1 gap-1 flex'
+        ref={wordWrapSpanRef}
         onChange={() => console.log('change?')}
         onScroll={(event) => console.log(event.currentTarget, event.target)}
       >
