@@ -50,7 +50,7 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
             const { index } = [...excludeWord.matchAll(new RegExp(`\\b${includeWord}\\b`, 'gi'))][0];
 
             // typescript undefined 에러 제거를 위한 조건문, 이 상황은 나올 이유가 없음
-            if (index === undefined || !excludeIndex === undefined) return;
+            if (index === undefined) return;
 
             if (includeIndex - index === excludeIndex) {
               flag = false;
