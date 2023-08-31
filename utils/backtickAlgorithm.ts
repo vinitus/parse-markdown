@@ -145,10 +145,10 @@ function transformLine(line: string, regexObj: TotalRegex) {
   let pushWordIdx = 0;
   let flag = true;
 
-  forEach(includeMatchedWords, (includeWordArr) => {
+  return reduce(includeMatchedWords, newLine, (prevLine, includeWordArr) => {
     const { 0: includeWord, index: includeIndex } = includeWordArr;
 
-    if (includeIndex === undefined) return;
+    if (includeIndex === undefined) return prevLine;
 
     const calcExclude = calcExcludeSetter(includeWord, includeIndex);
 
@@ -160,12 +160,12 @@ function transformLine(line: string, regexObj: TotalRegex) {
     }
 
     if (flag) {
-      newLine = cutSentenceByWord(newLine, includeWord, includeIndex, pushWordIdx);
+      prevLine = cutSentenceByWord(prevLine, includeWord, includeIndex, pushWordIdx);
       pushWordIdx += 2;
     }
-  });
 
-  return newLine;
+    return prevLine;
+  });
 }
 
 function forEach<T>(arr: T[], f: (arg: T) => void) {
