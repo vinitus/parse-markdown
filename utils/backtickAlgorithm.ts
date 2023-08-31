@@ -20,7 +20,7 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   // excludeTag 정규식 생성
   const excludeTagRegex = excludeTagToRegExp(excludeTag);
 
-  splitedMarkdown.forEach((line, n) => {
+  forEach(splitedMarkdown, (line, n) => {
     const trimedLine = line.trim();
 
     const checkIsExcludeTag = excludeTagRegex.test(trimedLine);
@@ -86,10 +86,10 @@ function cutSentenceByWord(sentence: string, targetWord: string, includeIndex: n
   return newSentence;
 }
 
-function forEach<T>(arr: T[], f: (arg: T) => void) {
+function forEach<T>(arr: T[], f: (arg: T, idx: number) => void) {
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i];
-    f(item);
+    f(item, i);
   }
 }
 
