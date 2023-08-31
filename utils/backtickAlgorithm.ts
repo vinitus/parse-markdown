@@ -4,21 +4,19 @@ export interface FilterTarget {
   excludeTag: string[];
 }
 
+interface TotalRegex {
+  includeRegex: RegExp;
+  excludeRegex: RegExp;
+  excludeTagRegex: RegExp;
+}
+
 export default function backtickAlgorithm(markdown: string, filterTarget: FilterTarget) {
+  const totalReg = getTotalRegex(filterTarget);
+
+  const { includeRegex, excludeRegex, excludeTagRegex } = totalReg;
+
   // 줄바꿈을 기준으로 배열로 나누기
   const splitedMarkdown = markdown.split('\n');
-
-  // statement를 기반으로 한 정규식 만들기
-  const { include, exclude, excludeTag } = filterTarget;
-
-  // include 정규식 생성, 앞은 공백이 아닌 문자로 하고 뒤는 어떤 단어가 왔으나 영어면 전부 미포함
-  const includeRegex = new RegExp(`(?<!\\S)(?:${include.join('|')})(?![a-zA-Z])`, 'gi');
-
-  // exclude 정규식 생성, exclude는 해당 문자열이 들어간 모든 것을 해야할듯?
-  const excludeRegex = new RegExp(`${exclude.join('|')}`, 'gi');
-
-  // excludeTag 정규식 생성
-  const excludeTagRegex = excludeTagToRegExp(excludeTag);
 
   forEach(splitedMarkdown, (line, n) => {
     const trimedLine = line.trim();
@@ -130,4 +128,26 @@ function matchAllAndIterable(reg: RegExp, str: string) {
   const iterableArr = [...iterableIterator];
 
   return iterableArr;
+}
+
+function getTotalRegex(filterTarget: FilterTarget) {
+  // statement를 기반으로 한 정규식 만들기
+  const { include, exclude, excludeTag } = filterTarget;
+
+  // include 정규식 생성, 앞은 공백이 아닌 문자로 하고 뒤는 어떤 단어가 왔으나 영어면 전부 미포함
+  const includeRegex = new RegExp(`(?<!\\S)(?:${include.join('|')})(?![a-zA-Z])`, 'gi');
+
+  // exclude 정규식 생성, exclude는 해당 문자열이 들어간 모든 것을 해야할듯?
+  const excludeRegex = new RegExp(`${exclude.join('|')}`, 'gi');
+
+  // excludeTag 정규식 생성
+  const excludeTagRegex = excludeTagToRegExp(excludeTag);
+
+  const totalReg: TotalRegex = {
+    includeRegex,
+    excludeRegex,
+    excludeTagRegex,
+  };
+
+  return totalReg;
 }
