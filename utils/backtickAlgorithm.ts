@@ -138,11 +138,10 @@ function getMatchedWords(regexObj: TotalRegex, line: string) {
 }
 
 function transformLine(line: string, regexObj: TotalRegex) {
-  let newLine = line;
-
   const { includeMatchedWords, excludeMatchedWords } = getMatchedWords(regexObj, line);
   if (includeMatchedWords.length === 0) return line;
 
+  let newLine = line;
   let pushWordIdx = 0;
   let flag = true;
 
