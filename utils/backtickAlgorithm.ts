@@ -118,44 +118,7 @@ function sentenceSearch(markdown: string, regexObj: TotalRegex) {
   const splitedMarkdown = markdown.split('\n');
 
   const transFormedMarkdown = map(splitedMarkdown, (line) => {
-    let newLine = line;
-
-    const { includeRegex, excludeRegex, excludeTagRegex } = regexObj;
-
-    const trimedLine = line.trim();
-
-    const checkIsExcludeTag = excludeTagRegex.test(trimedLine);
-    if (checkIsExcludeTag) return line;
-
-    const includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
-    if (!includeMatchedWords.length) return line;
-
-    const excludeMatchedWords = matchAllAndIterable(excludeRegex, trimedLine);
-
-    let pushWordIdx = 0;
-    let flag = true;
-
-    forEach(includeMatchedWords, (includeWordArr) => {
-      const { 0: includeWord, index: includeIndex } = includeWordArr;
-
-      if (includeIndex === undefined) return;
-
-      const calcExclude = calcExcludeSetter(includeWord, includeIndex);
-
-      if (excludeMatchedWords.length) {
-        flag = reduce(excludeMatchedWords, flag, (acc, element) => {
-          if (acc) return calcExclude(acc, element);
-          return acc;
-        });
-      }
-
-      if (flag) {
-        newLine = cutSentenceByWord(newLine, includeWord, includeIndex, pushWordIdx);
-        pushWordIdx += 2;
-      }
-    });
-
-    return newLine;
+    return transformLine(line, regexObj);
   });
 
   return transFormedMarkdown.join('\n');
@@ -165,4 +128,45 @@ function map<T>(arr: T[], f: (arg: T, idx: number) => T) {
   const newArr: T[] = [];
   forEach(arr, (element, idx) => newArr.push(f(element, idx)));
   return newArr;
+}
+
+function transformLine(line: string, regexObj: TotalRegex) {
+  let newLine = line;
+
+  const { includeRegex, excludeRegex, excludeTagRegex } = regexObj;
+
+  const trimedLine = line.trim();
+
+  const checkIsExcludeTag = excludeTagRegex.test(trimedLine);
+  if (checkIsExcludeTag) return line;
+
+  const includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
+  if (!includeMatchedWords.length) return line;
+
+  const excludeMatchedWords = matchAllAndIterable(excludeRegex, trimedLine);
+
+  let pushWordIdx = 0;
+  let flag = true;
+
+  forEach(includeMatchedWords, (includeWordArr) => {
+    const { 0: includeWord, index: includeIndex } = includeWordArr;
+
+    if (includeIndex === undefined) return;
+
+    const calcExclude = calcExcludeSetter(includeWord, includeIndex);
+
+    if (excludeMatchedWords.length) {
+      flag = reduce(excludeMatchedWords, flag, (acc, element) => {
+        if (acc) return calcExclude(acc, element);
+        return acc;
+      });
+    }
+
+    if (flag) {
+      newLine = cutSentenceByWord(newLine, includeWord, includeIndex, pushWordIdx);
+      pushWordIdx += 2;
+    }
+  });
+
+  return newLine;
 }
