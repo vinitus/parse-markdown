@@ -38,31 +38,12 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
 
       if (includeIndex === undefined) return;
 
+      const calcExclude = calcExcludeSetter(includeWord, includeIndex);
+
       if (excludeMatchedWords.length) {
-        forEach(excludeMatchedWords, (excludeWordArr) => {
-          const { 0: excludeWord, index: excludeIndex } = excludeWordArr;
-          // 연관없는 단어에 대한 종료처리
-          if (!new RegExp(`${includeWord}`, 'gi').test(excludeWord)) return;
-
-          // 띄어져있는 단어에 대한 처리
-          if (new RegExp(`\\b${includeWord}\\b`, 'gi').test(excludeWord)) {
-            // 타겟단어는 exclude의 중앙 단어임
-            const { index } = [...excludeWord.matchAll(new RegExp(`\\b${includeWord}\\b`, 'gi'))][0];
-
-            // typescript undefined 에러 제거를 위한 조건문, 이 상황은 나올 이유가 없음
-            if (index === undefined) return;
-
-            if (includeIndex - index === excludeIndex) {
-              flag = false;
-              return;
-            }
-          }
-
-          // exclude의 단어가 include의 뒤에 무언가 추가된 형태의 새로운 단어일 경우에 대한 처리
-          if (new RegExp(`\\b${includeWord}\\B`, 'gi').test(excludeWord)) {
-            flag = false;
-            return;
-          }
+        flag = reduce(excludeMatchedWords, flag, (acc, element) => {
+          if (acc) return calcExclude(acc, element);
+          return acc;
         });
       }
       if (flag) {
@@ -109,4 +90,36 @@ function forEach<T>(arr: T[], f: (arg: T) => void) {
     const item = arr[i];
     f(item);
   }
+}
+
+function calcExcludeSetter(includeWord: string, includeIndex: number): (acc: boolean, excludeWordArr: RegExpMatchArray) => boolean {
+  function calcExclude(acc: boolean, excludeWordArr: RegExpMatchArray) {
+    const { 0: excludeWord, index: excludeIndex } = excludeWordArr;
+
+    // 연관없는 단어에 대한 종료처리
+    if (!new RegExp(`${includeWord}`, 'gi').test(excludeWord)) return acc;
+
+    // 띄어져있는 단어에 대한 처리
+    if (new RegExp(`\\b${includeWord}\\b`, 'gi').test(excludeWord)) {
+      // 타겟단어는 exclude의 중앙 단어임
+      const { index } = [...excludeWord.matchAll(new RegExp(`\\b${includeWord}\\b`, 'gi'))][0];
+
+      if (index === undefined) return acc;
+
+      // typescript undefined 에러 제거를 위한 조건문, 이 상황은 나올 이유가 없음
+      if (includeIndex - index === excludeIndex) return false;
+
+      // exclude의 단어가 include의 뒤에 무언가 추가된 형태의 새로운 단어일 경우에 대한 처리
+      if (new RegExp(`\\b${includeWord}\\B`, 'gi').test(excludeWord)) return false;
+    }
+    return acc;
+  }
+
+  return calcExclude;
+}
+
+function reduce<T, U>(arr: T[], init: U, f: (arg1: U, arg2: T) => U) {
+  let acc = init;
+  forEach(arr, (element) => (acc = f(acc, element)));
+  return acc;
 }
