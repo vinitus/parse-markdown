@@ -45,10 +45,10 @@ function cutSentenceByWord(sentence: string, targetWord: string, includeIndex: n
   return newSentence;
 }
 
-function forEach<T>(arr: T[], f: (arg: T, idx: number) => void) {
+function forEach<T>(arr: T[], f: (arg: T) => void) {
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i];
-    f(item, i);
+    f(item);
   }
 }
 
@@ -124,9 +124,9 @@ function sentenceSearch(markdown: string, regexObj: TotalRegex) {
   return transFormedMarkdown.join('\n');
 }
 
-function map<T>(arr: T[], f: (arg: T, idx: number) => T) {
+function map<T>(arr: T[], f: (arg: T) => T) {
   const newArr: T[] = [];
-  forEach(arr, (element, idx) => newArr.push(f(element, idx)));
+  forEach(arr, (element) => newArr.push(f(element)));
   return newArr;
 }
 
