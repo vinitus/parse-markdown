@@ -111,20 +111,37 @@ function sentenceSearch(markdown: string, regexObj: TotalRegex) {
   return transFormedMarkdown.join('\n');
 }
 
-function transformLine(line: string, regexObj: TotalRegex) {
-  let newLine = line;
+interface MatchAllResult {
+  includeMatchedWords: RegExpMatchArray[];
+  excludeMatchedWords: RegExpMatchArray[];
+}
 
+function getMatchedWords(regexObj: TotalRegex, line: string) {
   const { includeRegex, excludeRegex, excludeTagRegex } = regexObj;
 
   const trimedLine = line.trim();
 
+  const result: MatchAllResult = {
+    includeMatchedWords: [],
+    excludeMatchedWords: [],
+  };
+
   const checkIsExcludeTag = excludeTagRegex.test(trimedLine);
-  if (checkIsExcludeTag) return line;
+  if (checkIsExcludeTag) return result;
 
-  const includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
-  if (!includeMatchedWords.length) return line;
+  result.includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
+  if (!result.includeMatchedWords.length) return result;
 
-  const excludeMatchedWords = matchAllAndIterable(excludeRegex, trimedLine);
+  result.excludeMatchedWords = matchAllAndIterable(excludeRegex, trimedLine);
+
+  return result;
+}
+
+function transformLine(line: string, regexObj: TotalRegex) {
+  let newLine = line;
+
+  const { includeMatchedWords, excludeMatchedWords } = getMatchedWords(regexObj, line);
+  if (includeMatchedWords.length === 0) return line;
 
   let pushWordIdx = 0;
   let flag = true;
