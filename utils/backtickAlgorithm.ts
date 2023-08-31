@@ -17,11 +17,14 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
   // exclude 정규식 생성, exclude는 해당 문자열이 들어간 모든 것을 해야할듯?
   const excludeRegex = new RegExp(`${exclude.join('|')}`, 'gi');
 
+  // excludeTag 정규식 생성
+  const excludeTagRegex = excludeTagToRegExp(excludeTag);
+
   splitedMarkdown.forEach((line, n) => {
     let pushWordIdx = 0;
     const trimedLine = line.trim();
 
-    const checkIsExcludeTag = excludeTagToRegExp(excludeTag).test(trimedLine);
+    const checkIsExcludeTag = excludeTagRegex.test(trimedLine);
     if (checkIsExcludeTag) return;
 
     const includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
