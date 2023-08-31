@@ -11,48 +11,9 @@ interface TotalRegex {
 }
 
 export default function backtickAlgorithm(markdown: string, filterTarget: FilterTarget) {
-  const totalReg = getTotalRegex(filterTarget);
+  const totalRegex = getTotalRegex(filterTarget);
 
-  const { includeRegex, excludeRegex, excludeTagRegex } = totalReg;
-
-  // 줄바꿈을 기준으로 배열로 나누기
-  const splitedMarkdown = markdown.split('\n');
-
-  forEach(splitedMarkdown, (line, n) => {
-    const trimedLine = line.trim();
-
-    const checkIsExcludeTag = excludeTagRegex.test(trimedLine);
-    if (checkIsExcludeTag) return;
-
-    const includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
-    if (!includeMatchedWords.length) return;
-
-    const excludeMatchedWords = matchAllAndIterable(excludeRegex, trimedLine);
-
-    let pushWordIdx = 0;
-    let flag = true;
-
-    forEach(includeMatchedWords, (includeWordArr) => {
-      const { 0: includeWord, index: includeIndex } = includeWordArr;
-
-      if (includeIndex === undefined) return;
-
-      const calcExclude = calcExcludeSetter(includeWord, includeIndex);
-
-      if (excludeMatchedWords.length) {
-        flag = reduce(excludeMatchedWords, flag, (acc, element) => {
-          if (acc) return calcExclude(acc, element);
-          return acc;
-        });
-      }
-      if (flag) {
-        splitedMarkdown[n] = cutSentenceByWord(splitedMarkdown[n], includeWord, includeIndex, pushWordIdx);
-        pushWordIdx += 2;
-      }
-    });
-  });
-
-  return splitedMarkdown.join('\n');
+  return sentenceSearch(markdown, totalRegex);
 }
 
 function excludeTagToRegExp(excludeReg: string[]) {
@@ -143,11 +104,65 @@ function getTotalRegex(filterTarget: FilterTarget) {
   // excludeTag 정규식 생성
   const excludeTagRegex = excludeTagToRegExp(excludeTag);
 
-  const totalReg: TotalRegex = {
+  const totalRegex: TotalRegex = {
     includeRegex,
     excludeRegex,
     excludeTagRegex,
   };
 
-  return totalReg;
+  return totalRegex;
+}
+
+function sentenceSearch(markdown: string, regexObj: TotalRegex) {
+  // 줄바꿈을 기준으로 배열로 나누기
+  const splitedMarkdown = markdown.split('\n');
+
+  const transFormedMarkdown = map(splitedMarkdown, (line) => {
+    let newLine = line;
+
+    const { includeRegex, excludeRegex, excludeTagRegex } = regexObj;
+
+    const trimedLine = line.trim();
+
+    const checkIsExcludeTag = excludeTagRegex.test(trimedLine);
+    if (checkIsExcludeTag) return line;
+
+    const includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
+    if (!includeMatchedWords.length) return line;
+
+    const excludeMatchedWords = matchAllAndIterable(excludeRegex, trimedLine);
+
+    let pushWordIdx = 0;
+    let flag = true;
+
+    forEach(includeMatchedWords, (includeWordArr) => {
+      const { 0: includeWord, index: includeIndex } = includeWordArr;
+
+      if (includeIndex === undefined) return;
+
+      const calcExclude = calcExcludeSetter(includeWord, includeIndex);
+
+      if (excludeMatchedWords.length) {
+        flag = reduce(excludeMatchedWords, flag, (acc, element) => {
+          if (acc) return calcExclude(acc, element);
+          return acc;
+        });
+      }
+
+      if (flag) {
+        newLine = cutSentenceByWord(newLine, includeWord, includeIndex, pushWordIdx);
+        pushWordIdx += 2;
+      }
+    });
+
+    return newLine;
+  });
+
+  return transFormedMarkdown.join('\n');
+}
+
+function map<T>(arr: T[], f: (arg: T, idx: number) => T) {
+  const newArr: T[] = [];
+  forEach(arr, (element, idx) => newArr.push(f(element, idx)));
+  return newArr;
 }
