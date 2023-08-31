@@ -24,11 +24,8 @@ export default function backtickAlgorithm(markdown: string, filterTarget: Filter
     const checkIsExcludeTag = excludeTagToRegExp(excludeTag).test(trimedLine);
     if (checkIsExcludeTag) return;
 
-    const includeMatchedWordIter = trimedLine.matchAll(includeRegex);
-    const includeMatchedWords = [...includeMatchedWordIter];
-
-    const excludeMatchedWordIter = trimedLine.matchAll(excludeRegex);
-    const excludeMatchedWords = [...excludeMatchedWordIter];
+    const includeMatchedWords = matchAllAndIterable(includeRegex, trimedLine);
+    const excludeMatchedWords = matchAllAndIterable(excludeRegex, trimedLine);
 
     if (!includeMatchedWords.length) return;
     let flag = true;
@@ -122,4 +119,11 @@ function reduce<T, U>(arr: T[], init: U, f: (arg1: U, arg2: T) => U) {
   let acc = init;
   forEach(arr, (element) => (acc = f(acc, element)));
   return acc;
+}
+
+function matchAllAndIterable(reg: RegExp, str: string) {
+  const iterableIterator = str.matchAll(reg);
+  const iterableArr = [...iterableIterator];
+
+  return iterableArr;
 }
