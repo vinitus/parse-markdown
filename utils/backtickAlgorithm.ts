@@ -45,13 +45,6 @@ function cutSentenceByWord(sentence: string, targetWord: string, includeIndex: n
   return newSentence;
 }
 
-function forEach<T>(arr: T[], f: (arg: T) => void) {
-  for (let i = 0; i < arr.length; i++) {
-    const item = arr[i];
-    f(item);
-  }
-}
-
 function calcExcludeSetter(includeWord: string, includeIndex: number): (acc: boolean, excludeWordArr: RegExpMatchArray) => boolean {
   function calcExclude(acc: boolean, excludeWordArr: RegExpMatchArray) {
     const { 0: excludeWord, index: excludeIndex } = excludeWordArr;
@@ -76,12 +69,6 @@ function calcExcludeSetter(includeWord: string, includeIndex: number): (acc: boo
   }
 
   return calcExclude;
-}
-
-function reduce<T, U>(arr: T[], init: U, f: (arg1: U, arg2: T) => U) {
-  let acc = init;
-  forEach(arr, (element) => (acc = f(acc, element)));
-  return acc;
 }
 
 function matchAllAndIterable(reg: RegExp, str: string) {
@@ -124,12 +111,6 @@ function sentenceSearch(markdown: string, regexObj: TotalRegex) {
   return transFormedMarkdown.join('\n');
 }
 
-function map<T>(arr: T[], f: (arg: T) => T) {
-  const newArr: T[] = [];
-  forEach(arr, (element) => newArr.push(f(element)));
-  return newArr;
-}
-
 function transformLine(line: string, regexObj: TotalRegex) {
   let newLine = line;
 
@@ -169,4 +150,23 @@ function transformLine(line: string, regexObj: TotalRegex) {
   });
 
   return newLine;
+}
+
+function forEach<T>(arr: T[], f: (arg: T) => void) {
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    f(item);
+  }
+}
+
+function reduce<T, U>(arr: T[], init: U, f: (arg1: U, arg2: T) => U) {
+  let acc = init;
+  forEach(arr, (element) => (acc = f(acc, element)));
+  return acc;
+}
+
+function map<T>(arr: T[], f: (arg: T) => T) {
+  const newArr: T[] = [];
+  forEach(arr, (element) => newArr.push(f(element)));
+  return newArr;
 }
