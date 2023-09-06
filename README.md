@@ -1,5 +1,9 @@
 # MY BLOG
 
+### 프로젝트에서 문제를 해결해나간 경험
+
+[notion page](https://vinitus.notion.site/My-Blog-a00f3db378274ff8aeccc11fc7cf20c4?pvs=4)
+
 ### 실행방법
 
 1. npm install
