@@ -9,13 +9,15 @@ export default function Header() {
       <nav className={navbarCss.navbarLayout}>
         <div className={navbarCss.navbarCategoryArea}>
           <Image src={blogLogo} alt='블로그 로고' />
-          <p>Home</p>
-          <p>Post</p>
+          <Link href={'/'}>
+            <p>Home</p>
+          </Link>
+          <p style={{ textDecoration: 'line-through' }}>Post</p>
           <Link href={'/markdown'}>
             <p>Mardown</p>
           </Link>
-          <p>TEMPT</p>
-          <p>TEMPT</p>
+          <p style={{ textDecoration: 'line-through' }}>TEMPT</p>
+          <p style={{ textDecoration: 'line-through' }}>TEMPT</p>
         </div>
         {/* search */}
         <div className={navbarCss.navbarSearchArea}>
