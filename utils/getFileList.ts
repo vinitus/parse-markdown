@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-interface FileDir {
+export interface FileDir {
   [key: string]: string | FileDir;
 }
 
@@ -23,7 +23,8 @@ function filereadDFS(dir: string) {
     if (fileStat.isDirectory()) {
       result[file] = filereadDFS(filepath);
     } else {
-      result[file] = 'file';
+      console.log(file);
+      if (new RegExp(/(.*?)\.md/).test(file)) result[file] = 'file';
     }
   }
 
