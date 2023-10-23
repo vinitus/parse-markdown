@@ -23,7 +23,6 @@ function filereadDFS(dir: string) {
     if (fileStat.isDirectory()) {
       result[file] = filereadDFS(filepath);
     } else {
-      console.log(file);
       if (new RegExp(/(.*?)\.md/).test(file)) result[file] = 'file';
     }
   }
