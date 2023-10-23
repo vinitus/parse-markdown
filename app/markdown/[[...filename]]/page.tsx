@@ -8,7 +8,7 @@ export default async function MarkdownEditor({ params }: { params: { filename: s
     encodedPath = filename.join('/');
     filename = filename[filename.length - 1];
   }
-  console.log(filename);
+
   if (filename) {
     const decodedFilename = decodeURIComponent(encodedPath ? encodedPath : filename);
     const markdownContent = await loadMarkdown(decodedFilename);
