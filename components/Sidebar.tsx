@@ -9,7 +9,9 @@ export default function Sidebar({ fileList, addDir = '' }: { fileList: FileDir; 
         else
           return (
             <Link href={`/markdown/${addDir}/${key.split('.md')[0]}`}>
-              <ul key={idx}>{key}</ul>
+              <ul className='font-medium m-1' key={idx}>
+                {key}
+              </ul>
             </Link>
           );
       })}
